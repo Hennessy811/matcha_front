@@ -1,0 +1,24 @@
+<h1>Пользователи</h1>
+<button mat-flat-button color="primary" (click)="getOne()">Get one</button>
+
+<div class="feed-list" *ngIf="(profiles$ | async) as profiles">
+  <div class="feed-list-item" *ngFor="let profile of profiles">
+    <div class="info">
+      <h2>{{profile.fname}} {{profile.lname}}</h2>
+      <h4>E-mail: {{profile.email}}</h4>
+      <p>Username: {{profile.username}}</p>
+      <p>Age: {{profile.age}}</p>
+      <p>Biography: {{profile.biography}}</p>
+      <p>Gender: {{profile.gender}}</p>
+      <div class="interests" *ngIf="profile.interests">
+        Interests
+        <mat-chip-list>
+          <mat-chip *ngFor="let interest of profile.interests">{{interest}}</mat-chip>
+        </mat-chip-list>
+      </div>
+      <p>Preferences: {{profile.preferences}}</p>
+    </div>
+</div>
+
+
+</div>

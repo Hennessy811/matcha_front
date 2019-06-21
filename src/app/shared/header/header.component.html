@@ -1,0 +1,15 @@
+<mat-toolbar color="primary" class="header">
+  <p class="logo" [routerLink]="['feed']">Matcha</p>
+
+  <div class="auth" *ngIf="!(user$ | async); else logout">
+    <button mat-flat-button color="primary" [routerLink]="['login']">Login</button>
+    <div class="gap"></div>
+    <button mat-flat-button color="accent" [routerLink]="['registration']">Sign Up</button>
+  </div>
+
+  <ng-template #logout>
+    <div class="auth">
+      <button mat-flat-button color="warn" (click)="onLogout()">Logout</button>
+    </div>
+  </ng-template>
+</mat-toolbar>

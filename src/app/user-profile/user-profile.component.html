@@ -1,0 +1,19 @@
+<h1>Мой профиль</h1>
+<mat-divider></mat-divider>
+
+<div class="info" *ngIf="(profile$ | async) as profile">
+  <h2>{{profile.fname}} {{profile.lname}}</h2>
+  <h4>E-mail: {{profile.email}}</h4>
+  <p>Username: {{profile.username}}</p>
+  <p>Age: {{profile.age}}</p>
+  <p>Biography: {{profile.biography}}</p>
+  <p>Gender: {{profile.gender}}</p>
+  <div class="interests" *ngIf="profile.interests">
+    Interests
+    <mat-chip-list>
+      <mat-chip *ngFor="let interest of profile.interests">{{interest}}</mat-chip>
+    </mat-chip-list>
+  </div>
+  <p>Preferences: {{profile.preferences}}</p>
+</div>
+<button mat-stroked-button (click)="setMe()">set me</button>
