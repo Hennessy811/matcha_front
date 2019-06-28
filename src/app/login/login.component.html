@@ -1,1 +1,12 @@
+<form class="login-form">
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Input login" [formControl]="login">
+    </mat-form-field>
+    
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Input password" [formControl]="pass">
+    </mat-form-field>
+</form>
+<mat-checkbox class="memorize">Запомнить меня</mat-checkbox>
+<br>
 <button mat-flat-button color="accent" (click)="onSignIn()">Sign In</button><br>
