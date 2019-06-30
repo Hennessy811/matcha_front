@@ -17,9 +17,9 @@ export function reducer(state = initialState, action: UserActions): State {
   switch (action.type) {
 
     case UserActionTypes.LoadUsersSuccess:
-      // @ts-ignore
       return {
         ...state,
+        // @ts-ignore
         feed: action.payload.data
       };
 
