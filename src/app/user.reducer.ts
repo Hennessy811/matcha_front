@@ -1,5 +1,5 @@
 import {UserActions, UserActionTypes} from './user.actions';
-import {User} from "./core/User.interface";
+import {User} from './core/User.interface';
 
 export interface State {
   isLoggedIn: boolean;
@@ -39,7 +39,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         profile: action.payload.data
-      }
+      };
 
     default:
       return state;

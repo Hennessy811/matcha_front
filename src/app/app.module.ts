@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 import { HeaderComponent } from './shared/header/header.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
@@ -18,18 +18,18 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatToolbarModule, MatCheckboxModule
-} from "@angular/material";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {EffectsModule} from "@ngrx/effects";
-import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {StoreModule} from "@ngrx/store";
+} from '@angular/material';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {StoreModule} from '@ngrx/store';
 import { ConfirmationComponent } from './registration/confirmation/confirmation.component';
 import { reducers, metaReducers } from './reducers';
 import { environment } from '../environments/environment';
 import { AppEffects } from './app.effects';
 import * as fromUser from './user.reducer';
 import { UserEffects } from './user.effects';
-import {ApplicationGuard} from "./core/services/application.guard";
+import {ApplicationGuard} from './core/services/application.guard';
 
 @NgModule({
   declarations: [
