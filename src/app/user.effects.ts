@@ -8,6 +8,7 @@ import {AuthService} from "./core/services/auth.service";
 import {of} from "rxjs/internal/observable/of";
 import {UserService} from "./core/services/user.service";
 import {User} from "./core/User.interface";
+import {Router} from '@angular/router';
 
 
 @Injectable()
@@ -20,6 +21,7 @@ export class UserEffects {
     switchMap((action: any) => this.auth.signIn(action.payload).pipe(
       switchMap(res => {
         this.auth.setToken(res.jwt);
+        this.router.navigate(['feed']);
         return of(new LoginSuccess(res))
       })
     ))
@@ -46,6 +48,7 @@ export class UserEffects {
     ofType(UserActionTypes.Logout),
     switchMap((action: any) => {
       this.auth.logout()
+      this.router.navigate(['login']);
       return of(new LogoutSuccess())
     })
   );
@@ -53,6 +56,7 @@ export class UserEffects {
 
   constructor(private actions$: Actions<UserActions>,
               private auth: AuthService,
+              private router: Router,
               private user: UserService) {
   }
 

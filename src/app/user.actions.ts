@@ -21,6 +21,7 @@ export class LoadUsers implements Action {
 
 export class LoadUsersSuccess implements Action {
   readonly type = UserActionTypes.LoadUsersSuccess;
+  payload: any;
   constructor(payload: User[]) {}
 }
 
