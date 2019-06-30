@@ -17,9 +17,9 @@ import {
   MatCardModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatToolbarModule
+  MatToolbarModule, MatCheckboxModule
 } from "@angular/material";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {StoreModule} from "@ngrx/store";
@@ -48,6 +48,7 @@ import {ApplicationGuard} from "./core/services/application.guard";
     AppRoutingModule,
     HttpClientModule,
     MatToolbarModule,
+    MatCheckboxModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
@@ -56,6 +57,7 @@ import {ApplicationGuard} from "./core/services/application.guard";
     MatChipsModule,
     MatFormFieldModule,
     FormsModule,
+    ReactiveFormsModule,
     MatIconModule,
     StoreModule.forRoot({}),
     BrowserAnimationsModule,
