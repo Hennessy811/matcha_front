@@ -1,2 +1,28 @@
+<form class="registration-form">
 
-<button mat-flat-button color="primary" (click)="onSignUp()">Sign Up</button>
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Input user name" [formControl]="username">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Input first name" [formControl]="fname">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Input last name" [formControl]="lname">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Input e-mail" [formControl]="mail">
+    </mat-form-field>
+    
+    <mat-form-field class="form-field">
+        <input type="password" matInput placeholder="Input password" [formControl]="password">
+    </mat-form-field>
+    
+    <mat-form-field class="form-field">
+        <input type="password" matInput placeholder="Repeat password" [formControl]="password_confirmation">
+    </mat-form-field>
+
+</form>
+<button *ngIf="checkValid()" mat-flat-button color="primary" (click)="onSignUp()">Sign Up</button>

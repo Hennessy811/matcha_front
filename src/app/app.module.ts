@@ -17,7 +17,7 @@ import {
   MatCardModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatToolbarModule, MatCheckboxModule
+  MatToolbarModule, MatCheckboxModule, MatSelectModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EffectsModule} from '@ngrx/effects';
@@ -49,6 +49,7 @@ import {ApplicationGuard} from './core/services/application.guard';
     HttpClientModule,
     MatToolbarModule,
     MatCheckboxModule,
+    MatSelectModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,

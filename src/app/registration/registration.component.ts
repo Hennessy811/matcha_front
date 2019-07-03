@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../core/services/auth.service";
 import {User} from "../core/User.interface";
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -12,14 +13,21 @@ export class RegistrationComponent implements OnInit {
   constructor(private auth: AuthService) {
   }
 
+  username = new FormControl('hennessy811');
+  fname = new FormControl('Foo');
+  lname = new FormControl('Bar');
+  mail = new FormControl('mitia2022@gmail.com');
+  password = new FormControl('foobar21');
+  password_confirmation = new FormControl('foobar21');
+
   onSignUp() {
     let user: User = {
-      "username": 'hennessy811',
-      "email": "mitia2022@gmail.com",
-      "password": "foobar21",
-      "password_confirmation": "foobar21",
-      "fname": "Foo",
-      "lname": "Bar",
+      "username": this.username.value,
+      "email": this.mail.value,
+      "password": this.password.value,
+      "password_confirmation": this.password_confirmation.value,
+      "fname": this.fname.value,
+      "lname": this.lname.value,
       "age": 30,
       "biography": "I'm very cool!",
       "gender": "male",
@@ -32,6 +40,19 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  checkValid() {
+    if (
+      this.username.value &&
+      this.fname.value &&
+      this.lname.value &&
+      this.mail.value &&
+      this.password.value &&
+      this.password_confirmation.value == this.password.value) {
+      return true;
+    }
+    return false;
   }
 
 }
