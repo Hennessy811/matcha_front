@@ -1,61 +1,86 @@
 <h1>My Profile</h1>
 <mat-divider></mat-divider>
 
-<div class="info" *ngIf="showProfile && (profile$ | async) as profile">
+<div class="info" *ngIf="(profile$ | async) as profile">
+
   <h2>{{profile.fname}} {{profile.lname}}</h2>
   <h4>E-mail: {{profile.email}}</h4>
   <p>Username: {{profile.username}}</p>
-  <p>Age: {{profile.age}}</p>
-  <p>Biography: {{profile.biography}}</p>
-  <p>Gender: {{profile.gender}}</p>
+
+  <span *ngIf="editAge; else elseAge">Age: {{newAge || profile.age}}</span>
+  <ng-template #elseAge>
+    <mat-form-field class="form-field">
+      <mat-label>Set your age</mat-label>
+      <mat-select [(ngModel)]="age">
+        <mat-option *ngFor="let age of ages" [value]="age">
+          {{age + 18}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+  <button mat-stroked-button (click)="saveAge()">
+    {{ editAge ? 'edit age' : 'save change' }}
+  </button>
+  <br><br>
+  
+  <span *ngIf="editBiography; else elseBiography">Biography: {{newBiography || profile.biography}}</span>
+  <ng-template #elseBiography>
+    <mat-form-field class="form-field">
+      <input matInput
+      placeholder="Edit your biography"
+      [(ngModel)]="biography">
+    </mat-form-field>
+  </ng-template>
+  <button mat-stroked-button (click)="saveBiography()">
+    {{ editBiography ? 'edit biography' : 'save change' }}
+  </button>
+  <br><br>
+  
+  
+  <span *ngIf="editGender; else elseGender">Gender: {{newGender || profile.gender}}</span>
+  <ng-template #elseGender>
+    <mat-form-field class="form-field">
+      <mat-label>Select gender</mat-label>
+      <mat-select [(ngModel)]="gender">
+        <mat-option selected *ngFor="let gender of genderList" [value]="gender">
+          {{gender}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+  <button mat-stroked-button (click)="saveGender()">
+    {{ editGender ? 'change gender' : 'save change' }}
+  </button>
+  <br><br>
+  
+
+  <span *ngIf="editPref; else elsePref">Gender: {{newPref || profile.preferences}}</span>
+  <ng-template #elsePref>
+    <mat-form-field class="form-field">
+      <mat-label>Select preferences</mat-label>
+      <mat-select [(ngModel)]="gender">
+        <mat-option selected *ngFor="let preferences of preferencesList" [value]="preferences">
+          {{preferences}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+  <button mat-stroked-button (click)="savePref()">
+    {{ editPref ? 'change preferences' : 'save change' }}
+  </button>
+  <br><br>
+
   <div class="interests" *ngIf="profile.interests">
     Interests
     <mat-chip-list>
       <mat-chip *ngFor="let interest of profile.interests">{{interest}}</mat-chip>
     </mat-chip-list>
   </div>
-  <p>Preferences: {{profile.preferences}}</p>
 </div>
 
-<div class="info" *ngIf="!showProfile && (profile$ | async) as profile">
-  <mat-form-field class="form-field">
-    <mat-label>Set your age</mat-label>
-    <mat-select [(ngModel)]="age">
-      <mat-option *ngFor="let age of ages" [value]="age">
-        {{age + 18}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  
-  <mat-form-field class="form-field">
-    <input matInput
-    placeholder="Edit your biography"
-    [(ngModel)]="biography"
-    value={{profile.biography}}>
-    
-  </mat-form-field>
-  
-  <mat-form-field class="form-field">
-    <mat-label>Select gender</mat-label>
-    <!-- <mat-select [value]="profile.gender"> -->
-    <mat-select [(ngModel)]="gender">
-      <mat-option selected *ngFor="let gender of genderList" [value]="gender">
-        {{gender}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  
-  <mat-form-field class="form-field">
-    <mat-label>Select preference</mat-label>
-    <!-- <mat-select [value]="profile.preferences"> -->
-    <mat-select [(ngModel)]="preference">
-      <mat-option *ngFor="let preference of preferencesList" [value]="preference">
-        {{preference}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  
-  <div class="flex_row">
+
+
+  <!-- <div class="flex_row">
     <mat-form-field class="form-field">
       <input matInput
       placeholder="Add new tag"
@@ -65,13 +90,8 @@
     <button class="right_btn" mat-stroked-button (click)="aaddTag()">add tag</button>
   </div>
   <mat-chip-list>
-      <mat-chip *ngFor="let item of profile.interests">{{ item }}</mat-chip>
-    </mat-chip-list>
-
-
-
-</div>
+    <mat-chip *ngFor="let item of profile.interests">{{ item }}</mat-chip>
+  </mat-chip-list> -->
 
 <button mat-stroked-button (click)="setMe()">set me</button>
-<button mat-stroked-button (click)="toggleEdit($event)">edit profile</button>
 <button mat-stroked-button (click)="sendData($event)">send data</button>
