@@ -43,6 +43,9 @@ export class UserProfileComponent implements OnInit {
     'male',
     'female',
   ];
+
+  newTag: string;
+  editInterests: boolean = true;
   interests: string[];
   
   constructor(private user: UserService,
@@ -51,7 +54,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.ages = Array(100).fill(0).map((x,i)=>i);
     this.store.dispatch(new LoadMe());
-    this.profile$.subscribe((val) => console.log(val));
+    // this.profile$.subscribe((val) => console.log(val));
   }
 
   setMe() {
@@ -89,6 +92,17 @@ export class UserProfileComponent implements OnInit {
       this.newPref = this.preferences;
     }
     this.editPref = !this.editPref;
+  }
+
+  saveTag() {
+    if(!this.interests) {
+      this.interests = [];
+    } 
+    if (this.newTag && !this.interests.includes(this.newTag)) {
+      this.interests.push(this.newTag);
+    }
+    this.newTag = "";
+    this.editInterests = !this.editInterests;
   }
 
   sendData() {

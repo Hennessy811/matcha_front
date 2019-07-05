@@ -7,7 +7,9 @@
   <h4>E-mail: {{profile.email}}</h4>
   <p>Username: {{profile.username}}</p>
 
-  <span *ngIf="editAge; else elseAge">Age: {{newAge || profile.age}}</span>
+  <span *ngIf="editAge; else elseAge">
+    Age: {{newAge || profile.age || "set your age"}}
+  </span>
   <ng-template #elseAge>
     <mat-form-field class="form-field">
       <mat-label>Set your age</mat-label>
@@ -23,7 +25,9 @@
   </button>
   <br><br>
   
-  <span *ngIf="editBiography; else elseBiography">Biography: {{newBiography || profile.biography}}</span>
+  <span *ngIf="editBiography; else elseBiography">
+    Biography: {{newBiography || profile.biography || "set your biography"}}
+  </span>
   <ng-template #elseBiography>
     <mat-form-field class="form-field">
       <input matInput
@@ -37,7 +41,9 @@
   <br><br>
   
   
-  <span *ngIf="editGender; else elseGender">Gender: {{newGender || profile.gender}}</span>
+  <span *ngIf="editGender; else elseGender">
+    Gender: {{newGender || profile.gender || "select your gender"}}
+  </span>
   <ng-template #elseGender>
     <mat-form-field class="form-field">
       <mat-label>Select gender</mat-label>
@@ -54,7 +60,9 @@
   <br><br>
   
 
-  <span *ngIf="editPref; else elsePref">Gender: {{newPref || profile.preferences}}</span>
+  <span *ngIf="editPref; else elsePref">
+    Gender: {{newPref || profile.preferences || "select your preferences"}}
+  </span>
   <ng-template #elsePref>
     <mat-form-field class="form-field">
       <mat-label>Select preferences</mat-label>
@@ -69,29 +77,30 @@
     {{ editPref ? 'change preferences' : 'save change' }}
   </button>
   <br><br>
+  
 
-  <div class="interests" *ngIf="profile.interests">
-    Interests
-    <mat-chip-list>
-      <mat-chip *ngFor="let interest of profile.interests">{{interest}}</mat-chip>
-    </mat-chip-list>
+  <div class="interests">
+    <div class="input">
+      <br><span>Interests: </span>
+      <mat-chip-list *ngIf="profile.interests || interests; else notIterests">
+        <mat-chip *ngFor="let item of profile.interests">#{{ item }}</mat-chip>
+        <mat-chip *ngFor="let item of interests">#{{ item }}</mat-chip>
+      </mat-chip-list>
+      <ng-template #notIterests>
+        <span>add some tags</span>
+      </ng-template>
+    </div>
+    <div class="list">
+      <mat-form-field class="form-field">
+        <input matInput
+        placeholder="Add new tag"
+        [(ngModel)]="newTag"
+        value=''>
+      </mat-form-field>
+      <button mat-stroked-button (click)="saveTag()">add tag</button>
+    </div>
   </div>
 </div>
-
-
-
-  <!-- <div class="flex_row">
-    <mat-form-field class="form-field">
-      <input matInput
-      placeholder="Add new tag"
-      [(ngModel)]="interests"
-      value=''>
-    </mat-form-field>
-    <button class="right_btn" mat-stroked-button (click)="aaddTag()">add tag</button>
-  </div>
-  <mat-chip-list>
-    <mat-chip *ngFor="let item of profile.interests">{{ item }}</mat-chip>
-  </mat-chip-list> -->
 
 <button mat-stroked-button (click)="setMe()">set me</button>
 <button mat-stroked-button (click)="sendData($event)">send data</button>
