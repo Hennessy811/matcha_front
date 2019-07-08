@@ -18,6 +18,19 @@ export interface Food {
 export class UserProfileComponent implements OnInit {
 
   profile$: Observable<User> = this.store.select(state => state.user.profile);
+
+  editName: boolean = true;
+  newName: string;
+  fname: string;
+  lname: string;
+
+  editMail: boolean = true;
+  newMail: string;
+  mail: string;
+
+  editUsername: boolean = true;
+  newUsername: string;
+  username: string;
   
   editAge: boolean = true;
   newAge: number;
@@ -64,6 +77,27 @@ export class UserProfileComponent implements OnInit {
     };
 
     // this.user.setMe(user).subscribe((user: User) => this.info = user)
+  }
+  
+  saveName() {
+    if (!this.editName) {
+      this.newName = this.fname + " " + this.lname;
+    }
+    this.editName = !this.editName;
+  }
+  
+  saveMail() {
+    if (!this.editMail) {
+      this.newMail = this.mail;
+    }
+    this.editMail = !this.editMail;
+  }
+  
+  saveUsername() {
+    if (!this.editUsername) {
+      this.newUsername = this.username;
+    }
+    this.editUsername = !this.editUsername;
   }
   
   saveAge() {

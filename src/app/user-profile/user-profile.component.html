@@ -3,9 +3,64 @@
 
 <div class="info" *ngIf="(profile$ | async) as profile">
 
-  <h2>{{profile.fname}} {{profile.lname}}</h2>
-  <h4>E-mail: {{profile.email}}</h4>
-  <p>Username: {{profile.username}}</p>
+  <!-- <h2>{{profile.fname}} {{profile.lname}}</h2> -->
+
+
+  <span *ngIf="!newName && editName">
+    {{profile.fname}} {{profile.lname}}
+  </span>
+  <span *ngIf="newName">
+    {{newName}}
+  </span>
+  <!-- <ng-template > -->
+    <mat-form-field class="form-field" *ngIf="!editName">
+      <input matInput
+      placeholder="Edit your first name"
+      [(ngModel)]="fname">
+    </mat-form-field>
+    <mat-form-field class="form-field" *ngIf="!editName">
+      <input matInput
+      placeholder="Edit your last name"
+      [(ngModel)]="lname">
+    </mat-form-field>
+  <!-- </ng-template> -->
+  <button mat-stroked-button (click)="saveName()">
+    {{ editName ? 'edit name' : 'save change' }}
+  </button>
+  <br><br>
+
+
+  <span *ngIf="editMail; else elseMail">
+    E-mail: {{newMail || profile.email || "set your mail"}}
+  </span>
+  <ng-template #elseMail>
+    <mat-form-field class="form-field">
+      <input matInput
+      placeholder="Edit your mail"
+      [(ngModel)]="mail">
+    </mat-form-field>
+  </ng-template>
+  <button mat-stroked-button (click)="saveMail()">
+    {{ editMail ? 'edit mail' : 'save change' }}
+  </button>
+  <br><br>
+
+
+  <span *ngIf="editUsername; else elseUsername">
+    Age: {{newUsername || profile.username || "set your username"}}
+  </span>
+  <ng-template #elseUsername>
+    <mat-form-field class="form-field">
+      <input matInput
+      placeholder="Edit your username"
+      [(ngModel)]="username">
+    </mat-form-field>
+  </ng-template>
+  <button mat-stroked-button (click)="saveUsername()">
+    {{ editUsername ? 'edit username' : 'save change' }}
+  </button>
+  <br><br>
+
 
   <span *ngIf="editAge; else elseAge">
     Age: {{newAge || profile.age || "set your age"}}
@@ -25,6 +80,7 @@
   </button>
   <br><br>
   
+
   <span *ngIf="editBiography; else elseBiography">
     Biography: {{newBiography || profile.biography || "set your biography"}}
   </span>
