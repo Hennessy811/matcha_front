@@ -3,16 +3,10 @@
 
 <div class="info" *ngIf="(profile$ | async) as profile">
 
-  <!-- <h2>{{profile.fname}} {{profile.lname}}</h2> -->
-
-
-  <span *ngIf="!newName && editName">
-    {{profile.fname}} {{profile.lname}}
+  <span *ngIf="editName; else elseName">
+    {{ newName || getFullName() || "set yout name" }}
   </span>
-  <span *ngIf="newName">
-    {{newName}}
-  </span>
-  <!-- <ng-template > -->
+  <ng-template #elseName>
     <mat-form-field class="form-field" *ngIf="!editName">
       <input matInput
       placeholder="Edit your first name"
@@ -23,7 +17,7 @@
       placeholder="Edit your last name"
       [(ngModel)]="lname">
     </mat-form-field>
-  <!-- </ng-template> -->
+  </ng-template>
   <button mat-stroked-button (click)="saveName()">
     {{ editName ? 'edit name' : 'save change' }}
   </button>
@@ -117,12 +111,12 @@
   
 
   <span *ngIf="editPref; else elsePref">
-    Gender: {{newPref || profile.preferences || "select your preferences"}}
+    Preferences: {{newPref || profile.preferences || "select your preferences"}}
   </span>
   <ng-template #elsePref>
     <mat-form-field class="form-field">
       <mat-label>Select preferences</mat-label>
-      <mat-select [(ngModel)]="gender">
+      <mat-select [(ngModel)]="preferences">
         <mat-option selected *ngFor="let preferences of preferencesList" [value]="preferences">
           {{preferences}}
         </mat-option>

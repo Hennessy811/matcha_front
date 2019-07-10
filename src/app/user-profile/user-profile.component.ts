@@ -78,10 +78,22 @@ export class UserProfileComponent implements OnInit {
 
     // this.user.setMe(user).subscribe((user: User) => this.info = user)
   }
+
+  getFullName() {
+    let fullName;
+    this.profile$.subscribe(val => fullName = val.fname + " " + val.lname)
+    return fullName;
+  }
   
   saveName() {
     if (!this.editName) {
       this.newName = this.fname + " " + this.lname;
+    }
+    else {
+      this.profile$.subscribe(val => {
+        this.fname = this.fname || val.fname;
+        this.lname = this.lname || val.lname
+      })
     }
     this.editName = !this.editName;
   }
@@ -90,6 +102,9 @@ export class UserProfileComponent implements OnInit {
     if (!this.editMail) {
       this.newMail = this.mail;
     }
+    else {
+      this.profile$.subscribe(val => this.mail = this.newMail || val.email);
+    } 
     this.editMail = !this.editMail;
   }
   
@@ -97,6 +112,9 @@ export class UserProfileComponent implements OnInit {
     if (!this.editUsername) {
       this.newUsername = this.username;
     }
+    else {
+      this.profile$.subscribe(val => this.username = this.newUsername || val.username);
+    } 
     this.editUsername = !this.editUsername;
   }
   
@@ -104,6 +122,9 @@ export class UserProfileComponent implements OnInit {
     if (!this.editAge) {
       this.newAge = this.age + 18;
     }
+    else {
+      this.profile$.subscribe(val => this.age = (this.newAge || val.age) - 18);
+    } 
     this.editAge = !this.editAge;
   }
 
@@ -111,6 +132,9 @@ export class UserProfileComponent implements OnInit {
     if (!this.editBiography) {
       this.newBiography = this.biography;
     }
+    else {
+      this.profile$.subscribe(val => this.biography = this.newBiography || val.biography);
+    } 
     this.editBiography = !this.editBiography;
   }
 
@@ -118,6 +142,9 @@ export class UserProfileComponent implements OnInit {
     if (!this.editGender) {
       this.newGender = this.gender;
     }
+    else {
+      this.profile$.subscribe(val => this.gender = this.newGender || val.gender);
+    } 
     this.editGender = !this.editGender;
   }
 
@@ -125,6 +152,9 @@ export class UserProfileComponent implements OnInit {
     if (!this.editPref) {
       this.newPref = this.preferences;
     }
+    else {
+      this.profile$.subscribe(val => this.preferences = this.newPref || val.preferences);
+    } 
     this.editPref = !this.editPref;
   }
 
