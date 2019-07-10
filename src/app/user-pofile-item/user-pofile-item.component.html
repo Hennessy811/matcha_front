@@ -1,0 +1,15 @@
+ <div class="profile-input" (mouseover)="hover = !hover" (mouseout)="hover = !hover">
+   <span *ngIf="editField; else elseField">
+     {{ placeholder | titlecase }}: {{ fieldValue }}
+   </span>
+   <ng-template #elseField>
+     <ng-content></ng-content>
+     <ng-content></ng-content>
+   </ng-template>
+   <mat-icon
+    svgIcon="{{ editField ? 'edit' : 'save' }}"
+    [ngClass]=" (editField && hover) ? 'hidden' : ''"
+    (click)="saveValue()">
+  </mat-icon>
+   <br><br>
+ </div> 

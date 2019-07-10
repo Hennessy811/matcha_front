@@ -3,98 +3,78 @@
 
 <div class="info" *ngIf="(profile$ | async) as profile">
 
-  <span *ngIf="editName; else elseName">
-    {{ newName || getFullName() || "set yout name" }}
-  </span>
-  <ng-template #elseName>
-    <mat-form-field class="form-field" *ngIf="!editName">
-      <input matInput
-      placeholder="Edit your first name"
-      [(ngModel)]="fname">
-    </mat-form-field>
-    <mat-form-field class="form-field" *ngIf="!editName">
-      <input matInput
-      placeholder="Edit your last name"
-      [(ngModel)]="lname">
-    </mat-form-field>
-  </ng-template>
-  <button mat-stroked-button (click)="saveName()">
-    {{ editName ? 'edit name' : 'save change' }}
-  </button>
-  <br><br>
-
-
-  <span *ngIf="editMail; else elseMail">
-    E-mail: {{newMail || profile.email || "set your mail"}}
-  </span>
-  <ng-template #elseMail>
+  <app-user-pofile-item
+    [fieldValue]="fullName"
+    (changeValue)="getFullName()"
+    placeholder="name">
     <mat-form-field class="form-field">
       <input matInput
-      placeholder="Edit your mail"
-      [(ngModel)]="mail">
+        placeholder="Edit your first name"
+        [(ngModel)]="fname">
     </mat-form-field>
-  </ng-template>
-  <button mat-stroked-button (click)="saveMail()">
-    {{ editMail ? 'edit mail' : 'save change' }}
-  </button>
-  <br><br>
-
-
-  <span *ngIf="editUsername; else elseUsername">
-    Age: {{newUsername || profile.username || "set your username"}}
-  </span>
-  <ng-template #elseUsername>
     <mat-form-field class="form-field">
       <input matInput
-      placeholder="Edit your username"
-      [(ngModel)]="username">
+        placeholder="Edit your last name"
+        [(ngModel)]="lname">
     </mat-form-field>
-  </ng-template>
-  <button mat-stroked-button (click)="saveUsername()">
-    {{ editUsername ? 'edit username' : 'save change' }}
-  </button>
-  <br><br>
+  </app-user-pofile-item>
 
 
-  <span *ngIf="editAge; else elseAge">
-    Age: {{newAge || profile.age || "set your age"}}
-  </span>
-  <ng-template #elseAge>
+  <app-user-pofile-item
+    [fieldValue]="mail"
+    (changeValue)="0"
+    placeholder="e-mail">
     <mat-form-field class="form-field">
-      <mat-label>Set your age</mat-label>
-      <mat-select [(ngModel)]="age">
-        <mat-option *ngFor="let age of ages" [value]="age">
-          {{age + 18}}
+      <input matInput
+        placeholder="Edit your mail"
+        [(ngModel)]="mail">
+    </mat-form-field>
+  </app-user-pofile-item>
+
+
+  <app-user-pofile-item
+    [fieldValue]="username"
+    (changeValue)="0"
+    placeholder="username">
+    <mat-form-field class="form-field">
+      <input matInput
+        placeholder="Edit your username"
+        [(ngModel)]="username">
+    </mat-form-field>
+  </app-user-pofile-item>
+  
+  
+  <app-user-pofile-item
+  [fieldValue]="age"
+  (changeValue)="0"
+  placeholder="age">
+  <mat-form-field class="form-field">
+    <mat-label>Set your age</mat-label>
+    <mat-select [(ngModel)]="age">
+      <mat-option *ngFor="let age of ages" [value]="age">
+        {{age}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </ng-template>
-  <button mat-stroked-button (click)="saveAge()">
-    {{ editAge ? 'edit age' : 'save change' }}
-  </button>
-  <br><br>
+  </app-user-pofile-item>
   
-
-  <span *ngIf="editBiography; else elseBiography">
-    Biography: {{newBiography || profile.biography || "set your biography"}}
-  </span>
-  <ng-template #elseBiography>
+  
+  <app-user-pofile-item
+    [fieldValue]="biography"
+    (changeValue)="0"
+    placeholder="biography">
     <mat-form-field class="form-field">
       <input matInput
-      placeholder="Edit your biography"
-      [(ngModel)]="biography">
+        placeholder="Edit your biography"
+        [(ngModel)]="biography">
     </mat-form-field>
-  </ng-template>
-  <button mat-stroked-button (click)="saveBiography()">
-    {{ editBiography ? 'edit biography' : 'save change' }}
-  </button>
-  <br><br>
+  </app-user-pofile-item>
   
   
-  <span *ngIf="editGender; else elseGender">
-    Gender: {{newGender || profile.gender || "select your gender"}}
-  </span>
-  <ng-template #elseGender>
+  <app-user-pofile-item
+    [fieldValue]="gender"
+    (changeValue)="0"
+    placeholder="gender">
     <mat-form-field class="form-field">
       <mat-label>Select gender</mat-label>
       <mat-select [(ngModel)]="gender">
@@ -103,17 +83,13 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </ng-template>
-  <button mat-stroked-button (click)="saveGender()">
-    {{ editGender ? 'change gender' : 'save change' }}
-  </button>
-  <br><br>
+  </app-user-pofile-item>
   
-
-  <span *ngIf="editPref; else elsePref">
-    Preferences: {{newPref || profile.preferences || "select your preferences"}}
-  </span>
-  <ng-template #elsePref>
+  
+  <app-user-pofile-item
+    [fieldValue]="preferences"
+    (changeValue)="0"
+    placeholder="preferences">
     <mat-form-field class="form-field">
       <mat-label>Select preferences</mat-label>
       <mat-select [(ngModel)]="preferences">
@@ -122,25 +98,21 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </ng-template>
-  <button mat-stroked-button (click)="savePref()">
-    {{ editPref ? 'change preferences' : 'save change' }}
-  </button>
-  <br><br>
+  </app-user-pofile-item>
   
 
   <div class="interests">
-    <div class="input">
-      <br><span>Interests: </span>
-      <mat-chip-list *ngIf="profile.interests || interests; else notIterests">
+    <br><span>Interests: </span>
+    <div class="chips">
+      <mat-chip-list *ngIf="interests; else notIterests">
         <mat-chip *ngFor="let item of profile.interests">#{{ item }}</mat-chip>
         <mat-chip *ngFor="let item of interests">#{{ item }}</mat-chip>
       </mat-chip-list>
-      <ng-template #notIterests>
-        <span>add some tags</span>
-      </ng-template>
     </div>
-    <div class="list">
+    <ng-template #notIterests>
+      <span>add some tags</span>
+    </ng-template>
+    <div class="input">
       <mat-form-field class="form-field">
         <input matInput
         placeholder="Add new tag"
@@ -150,6 +122,7 @@
       <button mat-stroked-button (click)="saveTag()">add tag</button>
     </div>
   </div>
+
 </div>
 
 <button mat-stroked-button (click)="setMe()">set me</button>

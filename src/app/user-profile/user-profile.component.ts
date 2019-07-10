@@ -4,6 +4,8 @@ import {Store} from "@ngrx/store";
 import {LoadMe, UserActionTypes} from "../user.actions";
 import {Observable} from "rxjs";
 import {User} from "../core/User.interface";
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material/icon';
 
 export interface Food {
   value: string;
@@ -17,57 +19,60 @@ export interface Food {
 })
 export class UserProfileComponent implements OnInit {
 
-  profile$: Observable<User> = this.store.select(state => state.user.profile);
-
-  editName: boolean = true;
-  newName: string;
+  profile$: Observable<User>;
+  
+  fullName: string;
   fname: string;
   lname: string;
-
-  editMail: boolean = true;
-  newMail: string;
   mail: string;
-
-  editUsername: boolean = true;
-  newUsername: string;
   username: string;
-  
-  editAge: boolean = true;
-  newAge: number;
   age: number;
   ages: number[];
-
-  editBiography: boolean = true;
-  newBiography: string;
   biography: string;
-
-  editGender: boolean = true;
-  newGender: string;
   gender: string;
   genderList: string[] = [
     'male',
     'female',
   ];
-
-  editPref: boolean = true;
-  newPref: string;
   preferences: string;
   preferencesList: string[] = [
     'male',
     'female',
   ];
-
   newTag: string;
-  editInterests: boolean = true;
   interests: string[];
   
-  constructor(private user: UserService,
-              private store: Store<any>) { }
+  constructor(
+    private user: UserService,
+    private store: Store<any>,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer) {
+      iconRegistry.addSvgIcon(
+          'edit',
+          sanitizer.bypassSecurityTrustResourceUrl('assets/icons/edit.svg'));
+      iconRegistry.addSvgIcon(
+          'save',
+          sanitizer.bypassSecurityTrustResourceUrl('assets/icons/checked.svg'));
+    }
 
   ngOnInit() {
     this.ages = Array(100).fill(0).map((x,i)=>i);
     this.store.dispatch(new LoadMe());
-    // this.profile$.subscribe((val) => console.log(val));
+    this.profile$ = this.store.select(state => state.user.profile);
+    this.profile$.subscribe((val) => console.log(val));
+      this.profile$.subscribe((val) => {
+        if (val) {
+          this.fname = val.fname;
+          this.lname = val.lname;
+          this.age = val.age;
+          this.biography = val.biography;
+          this.mail = val.email;
+          this.username = val.username;
+          this.gender = val.gender;
+          this.preferences = val.preferences;
+          this.getFullName();
+        }
+      });
   }
 
   setMe() {
@@ -80,82 +85,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   getFullName() {
-    let fullName;
-    this.profile$.subscribe(val => fullName = val.fname + " " + val.lname)
+    let fullName = this.fname + " " + this.lname;
+    this.fullName = fullName;
     return fullName;
-  }
-  
-  saveName() {
-    if (!this.editName) {
-      this.newName = this.fname + " " + this.lname;
-    }
-    else {
-      this.profile$.subscribe(val => {
-        this.fname = this.fname || val.fname;
-        this.lname = this.lname || val.lname
-      })
-    }
-    this.editName = !this.editName;
-  }
-  
-  saveMail() {
-    if (!this.editMail) {
-      this.newMail = this.mail;
-    }
-    else {
-      this.profile$.subscribe(val => this.mail = this.newMail || val.email);
-    } 
-    this.editMail = !this.editMail;
-  }
-  
-  saveUsername() {
-    if (!this.editUsername) {
-      this.newUsername = this.username;
-    }
-    else {
-      this.profile$.subscribe(val => this.username = this.newUsername || val.username);
-    } 
-    this.editUsername = !this.editUsername;
-  }
-  
-  saveAge() {
-    if (!this.editAge) {
-      this.newAge = this.age + 18;
-    }
-    else {
-      this.profile$.subscribe(val => this.age = (this.newAge || val.age) - 18);
-    } 
-    this.editAge = !this.editAge;
-  }
-
-  saveBiography() {
-    if (!this.editBiography) {
-      this.newBiography = this.biography;
-    }
-    else {
-      this.profile$.subscribe(val => this.biography = this.newBiography || val.biography);
-    } 
-    this.editBiography = !this.editBiography;
-  }
-
-  saveGender() {
-    if (!this.editGender) {
-      this.newGender = this.gender;
-    }
-    else {
-      this.profile$.subscribe(val => this.gender = this.newGender || val.gender);
-    } 
-    this.editGender = !this.editGender;
-  }
-
-  savePref() {
-    if (!this.editPref) {
-      this.newPref = this.preferences;
-    }
-    else {
-      this.profile$.subscribe(val => this.preferences = this.newPref || val.preferences);
-    } 
-    this.editPref = !this.editPref;
   }
 
   saveTag() {
@@ -166,17 +98,14 @@ export class UserProfileComponent implements OnInit {
       this.interests.push(this.newTag);
     }
     this.newTag = "";
-    this.editInterests = !this.editInterests;
   }
 
   sendData() {
-    let data = {};
-    this.profile$.subscribe((val) => Object.assign(data, val));
     console.log({
-      "age": this.newAge || data['age'],
-      "biography": this.biography || data['biography'],
-      "gender": this.gender || data['gender'],
-      "preferences": this.preferences || data['preferences'],
+      "age": this.age,
+      "biography": this.biography,
+      "gender": this.gender,
+      "preferences": this.preferences,
       "interests": this.interests,
     });
   }
