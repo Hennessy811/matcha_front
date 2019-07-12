@@ -4,13 +4,13 @@ import {Store} from "@ngrx/store";
 import {LoadMe, UserActionTypes} from "../user.actions";
 import {Observable} from "rxjs";
 import {User} from "../core/User.interface";
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material/icon';
 
 export interface Food {
   value: string;
   viewValue: string;
 }
+
+interface StringMap { [key: string]: string; }
 
 @Component({
   selector: 'app-user-profile',
@@ -21,20 +21,11 @@ export class UserProfileComponent implements OnInit {
 
   profile$: Observable<User>;
   
-  fullName: string;
-  fname: string;
-  lname: string;
-  mail: string;
-  username: string;
-  age: number;
   ages: number[];
-  biography: string;
-  gender: string;
   genderList: string[] = [
     'male',
     'female',
   ];
-  preferences: string;
   preferencesList: string[] = [
     'male',
     'female',
@@ -44,50 +35,29 @@ export class UserProfileComponent implements OnInit {
   
   constructor(
     private user: UserService,
-    private store: Store<any>,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer) {
-      iconRegistry.addSvgIcon(
-          'edit',
-          sanitizer.bypassSecurityTrustResourceUrl('assets/icons/edit.svg'));
-      iconRegistry.addSvgIcon(
-          'save',
-          sanitizer.bypassSecurityTrustResourceUrl('assets/icons/checked.svg'));
-    }
+    private store: Store<any>
+  ) {}
 
   ngOnInit() {
     this.ages = Array(100).fill(0).map((x,i)=>i);
     this.store.dispatch(new LoadMe());
     this.profile$ = this.store.select(state => state.user.profile);
-    this.profile$.subscribe((val) => console.log(val));
-      this.profile$.subscribe((val) => {
-        if (val) {
-          this.fname = val.fname;
-          this.lname = val.lname;
-          this.age = val.age;
-          this.biography = val.biography;
-          this.mail = val.email;
-          this.username = val.username;
-          this.gender = val.gender;
-          this.preferences = val.preferences;
-          this.getFullName();
+  }
+
+  setName(data: StringMap) {
+    if (data['name']) {
+      let name = data.name.split(" ");
+      this.setMe({
+          "fname": name[0],
+          "lname": name[1]
         }
-      });
+      );
+    }
   }
 
-  setMe() {
-    console.log(this.profile$);
-    let user = {
-      "biography": "I'm really really very cool!"
-    };
-
+  setMe(data: StringMap) {
+    this.user.setMe(data).subscribe((user: User) => console.log(user));
     // this.user.setMe(user).subscribe((user: User) => this.info = user)
-  }
-
-  getFullName() {
-    let fullName = this.fname + " " + this.lname;
-    this.fullName = fullName;
-    return fullName;
   }
 
   saveTag() {
@@ -98,15 +68,5 @@ export class UserProfileComponent implements OnInit {
       this.interests.push(this.newTag);
     }
     this.newTag = "";
-  }
-
-  sendData() {
-    console.log({
-      "age": this.age,
-      "biography": this.biography,
-      "gender": this.gender,
-      "preferences": this.preferences,
-      "interests": this.interests,
-    });
   }
 }

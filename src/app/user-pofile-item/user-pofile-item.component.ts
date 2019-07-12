@@ -11,7 +11,7 @@ export class UserPofileItemComponent implements OnInit {
   hover: boolean = true;
 
   @Input() fieldValue: string;
-  @Input() placeholder: string;
+  @Input() fieldName: string;
   @Output() changeValue = new EventEmitter;
 
   constructor() { }
@@ -21,7 +21,11 @@ export class UserPofileItemComponent implements OnInit {
 
   saveValue() {
     this.editField = !this.editField;
-    this.changeValue.emit()
+    if (this.editField) {
+      let data = {};
+      data[this.fieldName] = this.fieldValue;
+      this.changeValue.emit(data);
+    }
   }
 
 }

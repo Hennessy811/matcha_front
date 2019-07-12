@@ -1,15 +1,15 @@
  <div class="profile-input" (mouseover)="hover = !hover" (mouseout)="hover = !hover">
    <span *ngIf="editField; else elseField">
-     {{ placeholder | titlecase }}: {{ fieldValue }}
+     {{ fieldName | titlecase }}: {{ fieldValue }}
    </span>
    <ng-template #elseField>
      <ng-content></ng-content>
      <ng-content></ng-content>
    </ng-template>
    <mat-icon
-    svgIcon="{{ editField ? 'edit' : 'save' }}"
     [ngClass]=" (editField && hover) ? 'hidden' : ''"
     (click)="saveValue()">
+    {{ editField ? 'edit' : 'done' }}
   </mat-icon>
    <br><br>
  </div> 

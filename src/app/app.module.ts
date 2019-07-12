@@ -31,7 +31,6 @@ import * as fromUser from './user.reducer';
 import { UserEffects } from './user.effects';
 import {ApplicationGuard} from './core/services/application.guard';
 import { UserPofileItemComponent } from './user-pofile-item/user-pofile-item.component';
-import {  } from './user-pofile-item/user-pofile-item.component';
 
 @NgModule({
   declarations: [

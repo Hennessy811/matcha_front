@@ -4,53 +4,53 @@
 <div class="info" *ngIf="(profile$ | async) as profile">
 
   <app-user-pofile-item
-    [fieldValue]="fullName"
-    (changeValue)="getFullName()"
-    placeholder="name">
+    [fieldValue]="profile.fname + ' ' + profile.lname"
+    (changeValue)="setName($event)"
+    fieldName="name">
     <mat-form-field class="form-field">
       <input matInput
         placeholder="Edit your first name"
-        [(ngModel)]="fname">
+        [(ngModel)]="profile.fname">
     </mat-form-field>
     <mat-form-field class="form-field">
       <input matInput
         placeholder="Edit your last name"
-        [(ngModel)]="lname">
+        [(ngModel)]="profile.lname">
     </mat-form-field>
   </app-user-pofile-item>
 
 
   <app-user-pofile-item
-    [fieldValue]="mail"
-    (changeValue)="0"
-    placeholder="e-mail">
+    [fieldValue]="profile.email"
+    (changeValue)="setMe($event)"
+    fieldName="e-mail">
     <mat-form-field class="form-field">
       <input matInput
         placeholder="Edit your mail"
-        [(ngModel)]="mail">
+        [(ngModel)]="profile.email">
     </mat-form-field>
   </app-user-pofile-item>
 
 
   <app-user-pofile-item
-    [fieldValue]="username"
-    (changeValue)="0"
-    placeholder="username">
+    [fieldValue]="profile.username"
+    (changeValue)="setMe($event)"
+    fieldName="username">
     <mat-form-field class="form-field">
       <input matInput
         placeholder="Edit your username"
-        [(ngModel)]="username">
+        [(ngModel)]="profile.username">
     </mat-form-field>
   </app-user-pofile-item>
   
   
   <app-user-pofile-item
-  [fieldValue]="age"
-  (changeValue)="0"
-  placeholder="age">
+  [fieldValue]="profile.age"
+  (changeValue)="setMe($event)"
+  fieldName="age">
   <mat-form-field class="form-field">
     <mat-label>Set your age</mat-label>
-    <mat-select [(ngModel)]="age">
+    <mat-select [(ngModel)]="profile.age">
       <mat-option *ngFor="let age of ages" [value]="age">
         {{age}}
         </mat-option>
@@ -58,26 +58,25 @@
     </mat-form-field>
   </app-user-pofile-item>
   
-  
   <app-user-pofile-item
-    [fieldValue]="biography"
-    (changeValue)="0"
-    placeholder="biography">
+    [fieldValue]="profile.biography"
+    (changeValue)="setMe($event)"
+    fieldName="biography">
     <mat-form-field class="form-field">
       <input matInput
         placeholder="Edit your biography"
-        [(ngModel)]="biography">
+        [(ngModel)]="profile.biography">
     </mat-form-field>
   </app-user-pofile-item>
   
   
   <app-user-pofile-item
-    [fieldValue]="gender"
-    (changeValue)="0"
-    placeholder="gender">
+    [fieldValue]="profile.gender"
+    (changeValue)="setMe($event)"
+    fieldName="gender">
     <mat-form-field class="form-field">
       <mat-label>Select gender</mat-label>
-      <mat-select [(ngModel)]="gender">
+      <mat-select [(ngModel)]="profile.gender">
         <mat-option selected *ngFor="let gender of genderList" [value]="gender">
           {{gender}}
         </mat-option>
@@ -87,12 +86,12 @@
   
   
   <app-user-pofile-item
-    [fieldValue]="preferences"
-    (changeValue)="0"
-    placeholder="preferences">
+    [fieldValue]="profile.preferences"
+    (changeValue)="setMe($event)"
+    fieldName="preferences">
     <mat-form-field class="form-field">
       <mat-label>Select preferences</mat-label>
-      <mat-select [(ngModel)]="preferences">
+      <mat-select [(ngModel)]="profile.preferences">
         <mat-option selected *ngFor="let preferences of preferencesList" [value]="preferences">
           {{preferences}}
         </mat-option>
@@ -125,5 +124,4 @@
 
 </div>
 
-<button mat-stroked-button (click)="setMe()">set me</button>
-<button mat-stroked-button (click)="sendData($event)">send data</button>
+<!-- <button mat-stroked-button (click)="setMe($event)">set me</button> -->
