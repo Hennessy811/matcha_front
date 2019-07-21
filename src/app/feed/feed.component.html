@@ -1,9 +1,75 @@
 <h1>Users Feed</h1>
+<mat-icon class="icon" (click)="showSettings = !showSettings">settings</mat-icon>
+
+<!-- <div class="icon" (click)="sort()" title="sort by age">
+  <mat-icon>people</mat-icon>
+  <mat-icon >{{ageSort ? 'arrow_drop_down' : 'arrow_drop_up'}}</mat-icon>
+</div> -->
+<!-- <mat-icon class="icon">arrow_drop_up</mat-icon> -->
+
+<!-- <mat-icon>settings</mat-icon> -->
+
+
+<div class="sort-panel" *ngIf="showSettings">
+
+  <mat-form-field class="form-field">
+    <mat-label>Sort by </mat-label>
+    <mat-select [(value)]="sorted">
+      <mat-option
+        *ngFor="let item of sortedList"
+        [value]="item"
+        (click)="sort()"> {{item}} </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h3>Change distance:</h3>
+  <mat-form-field class="form-field">
+    <input matInput
+      placeholder="Change distance"
+      (change)="filter()"
+      [(ngModel)]="radius">
+    </mat-form-field>
+
+  <h3>Select age gap:</h3>
+  <div class="age-gap">
+    <span class="label">From: </span>
+    <mat-slider
+      class="age-slider"
+      [max]="ageTo"
+      [min]="minFrom"
+      [step]="step"
+      [thumbLabel]="thumbLabel"
+      (change)="filter()"
+      [(ngModel)]="ageFrom">
+    </mat-slider>
+    <span>{{ ageFrom }}</span>
+    <br>
+    <span class="label">To: </span>
+    <mat-slider
+      class="age-slider"
+      [max]="maxTo"
+      [min]="ageFrom"
+      [step]="step"
+      [thumbLabel]="thumbLabel"
+      (change)="filter()"
+      [(ngModel)]="ageTo">
+    </mat-slider>
+    <span>{{ ageTo }}</span>
+  </div>
+
+  
+
+</div>
+
 <button mat-flat-button color="primary" (click)="getOne()">Get one</button>
 
 <div class="feed-list" *ngIf="(profiles$ | async) as profiles">
   <div class="feed-list-item" *ngFor="let profile of profiles">
     <div class="info">
+        {{profile.location.coordinates[0]}} - 
+        {{profile.location.coordinates[1]}}
+        <br>
+        {{getDistance(profile.location.coordinates)}}
       <h2>{{profile.fname}} {{profile.lname}}</h2>
       <h4>E-mail: {{profile.email}}</h4>
       <p>Username: {{profile.username}}</p>

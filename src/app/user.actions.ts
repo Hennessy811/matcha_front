@@ -2,6 +2,9 @@ import { Action } from '@ngrx/store';
 import {User} from "./core/User.interface";
 
 export enum UserActionTypes {
+  SortUsersDistance = '[User] Sort Users Distance',
+  SortUsersAge = '[User] Sort Users Age',
+  FilterUsers = '[User] Filter Users',
   LoadUsers = '[User] Load Users',
   LoadUsersSuccess = '[User] Load Users Success',
   LoadUser = '[User] Load User',
@@ -13,6 +16,22 @@ export enum UserActionTypes {
   Logout = '[User] Logout',
   LogoutSuccess = '[User] Logout Success',
   SignUp = '[User] Sign Up'
+}
+
+export class SortUsersDistance implements Action {
+  readonly type = UserActionTypes.SortUsersDistance;
+}
+
+export class SortUsersAge implements Action {
+  readonly type = UserActionTypes.SortUsersAge;
+}
+
+export class FilterUsers implements Action {
+  readonly type = UserActionTypes.FilterUsers;
+  payload: object;
+  constructor(val: object) {
+    this.payload = val;
+  }
 }
 
 export class LoadUsers implements Action {
@@ -68,7 +87,11 @@ export class SignUp implements Action {
 }
 
 
-export type UserActions = LoadUsers
+export type UserActions = 
+  | SortUsersDistance
+  | SortUsersAge
+  | FilterUsers
+  | LoadUsers
   | LoadUser
   | LoadUsersSuccess
   | LoadMe

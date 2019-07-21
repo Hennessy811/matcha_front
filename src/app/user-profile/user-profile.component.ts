@@ -49,7 +49,8 @@ export class UserProfileComponent implements OnInit {
       let name = data.name.split(" ");
       this.setMe({
           "fname": name[0],
-          "lname": name[1]
+          "lname": name[1],
+          "interests": "lol"
         }
       );
     }

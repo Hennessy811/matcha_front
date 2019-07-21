@@ -17,7 +17,8 @@ import {
   MatCardModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatToolbarModule, MatCheckboxModule, MatSelectModule
+  MatToolbarModule, MatCheckboxModule, MatSelectModule,
+  MatSliderModule, MatRadioModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EffectsModule} from '@ngrx/effects';
@@ -52,6 +53,8 @@ import { UserPofileItemComponent } from './user-pofile-item/user-pofile-item.com
     MatToolbarModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatSliderModule,
+    MatRadioModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
