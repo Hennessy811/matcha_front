@@ -17,7 +17,8 @@ import {
   MatCardModule, MatChipsModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatToolbarModule, MatCheckboxModule
+  MatToolbarModule, MatCheckboxModule, MatSelectModule,
+  MatSliderModule, MatRadioModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EffectsModule} from '@ngrx/effects';
@@ -30,6 +31,7 @@ import { AppEffects } from './app.effects';
 import * as fromUser from './user.reducer';
 import { UserEffects } from './user.effects';
 import {ApplicationGuard} from './core/services/application.guard';
+import { UserPofileItemComponent } from './user-pofile-item/user-pofile-item.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import {ApplicationGuard} from './core/services/application.guard';
     FeedComponent,
     ChatComponent,
     NavComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    UserPofileItemComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,9 @@ import {ApplicationGuard} from './core/services/application.guard';
     HttpClientModule,
     MatToolbarModule,
     MatCheckboxModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatRadioModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
