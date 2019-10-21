@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../core/services/user.service";
-import {Store} from "@ngrx/store";
+import {UserService} from '../core/services/user.service';
+import {Store} from '@ngrx/store';
 import {LoadUsers, FilterUsers, SortUsersAge, LoadMe,
-  SortUsersDistance} from "../user.actions";
-import {User} from "../core/User.interface";
-import {Observable} from "rxjs";
+  SortUsersDistance} from '../user.actions';
+import {User} from '../core/User.interface';
+import {Observable} from 'rxjs';
+import getDistance from 'geolib/es/getDistance';
+import {UserState} from '../user.reducer';
+import {logger} from 'codelyzer/util/logger';
 
 @Component({
   selector: 'app-feed',
@@ -14,61 +17,78 @@ import {Observable} from "rxjs";
 export class FeedComponent implements OnInit {
 
   constructor(private users: UserService,
-              private store: Store<any>) { }
+              private store: Store<UserState>) { }
 
-  profiles$: Observable<User[]> = this.store.select(state => state.user.filterFeed)
+  profiles$: Observable<User[]> = this.store.select(state => state.user.filterFeed);
+  me$: Observable<User> = this.store.select(state => state.user.profile);
+  isLoggedIn$: Observable<boolean> = this.store.select(state => state.user.isLoggedIn);
 
-  minFrom: number = 18;
-  maxTo: number = 118;
-  thumbLabel: boolean = true;
-  step: number = 1;
-  ageFrom: number = 18;
-  ageTo: number = 118;
-  radius: number = 100;
-  showSettings: boolean = false;
+  minFrom = 18;
+  maxTo = 118;
+  thumbLabel = true;
+  step = 1;
+  ageFrom = 18;
+  ageTo = 118;
+  radius = 100;
+  frate = 0;
+  showSettings = false;
   sorted: string = null;
-  sortedList: string[] = ["age", "distance", "tag"]
+  sortedList: string[] = ['age', 'distance', 'tag', 'frate'];
+
+  myCoords = null;
   // ageSort: boolean = false;
 
-
-
   ngOnInit() {
-    this.store.dispatch(new LoadUsers());
-    this.store.dispatch(new LoadMe()); // for usage user location in the store
-    // this.users.getList.subscribe(users => console.log(users))
+    this.isLoggedIn$.subscribe(res => {
+      if (res) {
+        this.store.dispatch(new LoadUsers());
+      }
+    }).unsubscribe();
+
+    this.me$.subscribe(res => {
+      if (res) {
+        this.myCoords = {
+          lat: res.location.coordinates[1],
+          lon: res.location.coordinates[0],
+        };
+      }
+    });
   }
 
-  getDistance(coords) {
-    let x = 37.6127488 - coords[0];
-    let y = 55.757209599999996 - coords[1];
-    let dist = Math.sqrt(x * x + y * y);
-    return dist;
+  getDistanceFromMe(coords) {
+    if (!this.myCoords) { return ''; }
+    return getDistance({
+      lat: coords[1],
+      lon: coords[0]
+    }, this.myCoords) / 1000;
   }
-  
+
   filter() {
     this.store.dispatch(new FilterUsers({
-      "ageFrom": this.ageFrom,
-      "ageTo": this.ageTo,
-      "radius": this.radius,
+      ageFrom: this.ageFrom,
+      ageTo: this.ageTo,
+      radius: this.radius,
+      frate: this.frate
     }));
     // if (this.sorted) {
-      this.sort();
+    this.sort();
     // }
   }
-  
+
   sort() {
     // console.log(this.sorted);
-    if (this.sorted == this.sortedList[0]) {
+    if (this.sorted === this.sortedList[0]) {
       this.store.dispatch(new SortUsersAge());
-    }
-    else if (this.sorted == this.sortedList[1]) {
+    } else if (this.sorted === this.sortedList[1]) {
+      this.store.dispatch(new SortUsersDistance());
+    } else if (this.sorted === this.sortedList[3]) {
       this.store.dispatch(new SortUsersDistance());
     }
     // if (this.ageSort)
   }
-  
+
   getOne() {
-    this.users.getOne(3).subscribe(user => console.log(user));
+    this.users.getOne(11).subscribe(user => console.log(user));
   }
 
 }

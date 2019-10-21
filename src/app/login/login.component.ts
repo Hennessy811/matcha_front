@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../core/services/auth.service';
+import { Component } from '@angular/core';
 import {Store} from '@ngrx/store';
-import {State} from '../user.reducer';
-import { UserActionTypes, UserActions } from '../user.actions';
+import {State, UserState} from '../user.reducer';
+import { UserActionTypes } from '../user.actions';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -10,35 +9,19 @@ import { FormControl } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  constructor(private auth: AuthService,
-              private store: Store<State>) { }
+  constructor(private store: Store<UserState>) { }
 
   login = new FormControl('mitia2022@gmail.com');
   pass = new FormControl('foobar21');
 
-  ngOnInit() {
-  }
-
   onSignIn() {
-
     const user = {
-      email: 'mitia2022@gmail.com',
-      password: 'foobar21'
+      email: this.login.value,
+      password: this.pass.value
     };
-
     this.store.dispatch({type: UserActionTypes.Login, payload: user});
-
-    const loginData = {
-      login: this.login.value,
-      pass: this.pass.value
-    };
-    console.log(loginData);
-    // this.auth.signIn(user).subscribe((res: any) => {
-    //   this.auth.setToken(res.jwt);
-    //   console.log(res)
-    // })
   }
 
 }

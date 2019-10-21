@@ -1,17 +1,32 @@
 export interface User {
-  email: string,
-  password: string,
-  username?: string,
-  password_confirmation?: string,
-  fname?: string,
-  lname?: string,
-  age?: number,
-  biography?: string,
-  gender?: "male" | "female" | "transgender",
-  preferences?: "female" | "male" | "bisexual",
-  interests?: string[],
+  id?: string | number;
+  email?: string;
+  password?: string;
+  fame_rating?: number;
+  username?: string;
+  connected?: boolean;
+  password_confirmation?: string;
+  fname?: string;
+  lname?: string;
+  age?: number;
+  biography?: string;
+  is_active?: boolean;
+  last_seen?: any;
+  gender?: 'male' | 'female' | 'transgender';
+  preferences?: 'female' | 'male' | 'bisexual';
+  interests?: string[];
+  photos?: Photo[];
+  subscribers?: User[];
+  subscriptions?: User[];
   location?: {
-    type?: "Point",
+    type?: 'Point',
     coordinates?: number[]
-  }
+  };
+  viewers?: {id: number | string, username: string}[];
+}
+
+export interface Photo {
+  id: string | number;
+  is_main: boolean;
+  url: string;
 }
