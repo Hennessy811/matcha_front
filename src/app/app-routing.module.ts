@@ -15,6 +15,9 @@ const routes: Routes = [
     path: '', pathMatch: 'full', redirectTo: 'feed'
   },
   {
+    path: 'confirm', component: ConfirmationComponent
+  },
+  {
     path: 'feed', component: FeedComponent, canActivate: [ApplicationGuard]
   },
   {
@@ -31,9 +34,6 @@ const routes: Routes = [
   },
   {
     path: 'restore', component: RestorePasswordComponent
-  },
-  {
-    path: 'confirm', component: ConfirmationComponent
   },
   {
     path: 'chat/:id', component: ChatComponent, canActivate: [ApplicationGuard]

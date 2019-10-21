@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="(joined | async); else loader">
   <div class="flex align-top" *ngIf="(rooms$ | async) as rooms">
     <div class="list">
       <mat-list>
@@ -6,12 +6,20 @@
       </mat-list>
     </div>
 
-    <div class="chat">
-      <div class="messages">messages</div>
-      <div class="input">
-        <input type="text" matInput [(ngModel)]="message">
-        <button mat-stroked-button (click)="send()">Send</button>
+    <div class="chat" *ngIf="(rooms$ | async) as rooms">
+      <div *ngIf="messages">
+        <div class="messages" #scrollMe>
+          <div class="mine messages-item" [ngClass]="{ 'mine': (me$ | async) === item.user.id, 'notmine': item.user.id !== (me$ | async) }" *ngFor="let item of messages">{{item.text}}</div>
+        </div>
+        <div class="input">
+          <input type="text" matInput name="message" [(ngModel)]="message">
+          <button mat-stroked-button (click)="send()">Send</button>
+        </div>
       </div>
     </div>
   </div>
 </mat-card>
+
+<ng-template #loader>
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</ng-template>

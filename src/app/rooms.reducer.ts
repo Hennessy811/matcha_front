@@ -1,8 +1,21 @@
 import {RoomActionTypes, RoomsActions} from './rooms.actions';
 
 export interface RoomsState {
-  messages: any;
-  rooms: Room[];
+  rooms: State;
+}
+
+export interface ChatRoom {
+  messages: Message[];
+  room: {
+    id: number;
+    users: {id: number | string, username: string}[]
+  };
+}
+export interface Message {
+  id: number | string;
+  inserted_at: string;
+  text: string;
+  user: {id: number | string, username: string};
 }
 
 export interface Room {

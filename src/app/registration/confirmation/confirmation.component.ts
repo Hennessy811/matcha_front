@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../core/services/auth.service";
-import {ActivatedRoute} from "@angular/router";
+import {AuthService} from '../../core/services/auth.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-confirmation',
@@ -13,6 +13,7 @@ export class ConfirmationComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    console.log('beepboop');
     this.route.queryParams.subscribe(params => {
       this.auth.activate(params.token);
     }).unsubscribe();

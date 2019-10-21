@@ -6,9 +6,26 @@
   display: flex
   flex-direction: column
   .messages
-    width: 100%
     flex: 15 1 auto
     padding: 10px
+    width: auto
+    display: flex
+    flex-direction: column
+    max-height: 65vh
+    overflow: scroll
+    .messages-item
+      //color: white
+      border-radius: 10px
+      padding: 10px 15px
+      max-width: 70%
+      margin-top: 10px
+
+    .mine
+      align-self: flex-end
+      background-color: rgba(175, 176, 255, 0.81)
+    .notmine
+      align-items: flex-start
+      background-color: rgba(255, 246, 224, 0.81)
 
   .input
     padding: 10px

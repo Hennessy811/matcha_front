@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../core/services/auth.service';
 import {User} from '../core/User.interface';
 import {FormControl} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +11,8 @@ import {FormControl} from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService,    private snackBar: MatSnackBar,
+  ) {
   }
 
   username = new FormControl('hennessy811');
@@ -36,7 +38,10 @@ export class RegistrationComponent implements OnInit {
       location: {type: 'Point', coordinates: [100, 30]}
     };
 
-    this.auth.signUp(user).subscribe(res => console.log(res));
+    this.auth.signUp(user).subscribe(res => {
+      console.log(res)
+      this.snackBar.open(res.ok.detail || res.error.detail, 'Close', {horizontalPosition: 'start', duration: 5 * 1000});
+    });
   }
 
   ngOnInit() {
