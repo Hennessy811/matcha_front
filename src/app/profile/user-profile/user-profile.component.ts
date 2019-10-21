@@ -94,6 +94,8 @@ export class UserProfileComponent implements OnInit {
     this.profile$.subscribe(res => {
       const { interests } = res;
       if (interests.includes(this.newTag)) { return; }
+      // console.log(this.newTag.match('/(?:\s|^)#[A-Za-z0-9\-\.\_]+(?:\s|$)/i'));
+
       interests.push(`#${this.newTag}`);
       this.setMe({ interests });
     }).unsubscribe();

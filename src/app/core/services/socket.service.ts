@@ -45,26 +45,23 @@ export class SocketService {
     channel
       .join()
       .receive('ok', resp => {
-        this.openSnackBar('Joined successfully');
+        // this.openSnackBar('Joined successfully');
       })
       .receive('error', resp => {
-        console.log('Unable to join', resp);
+        this.openSnackBar('Unable to load something important, please, reload the page... :(');
       });
 
     channel.on('new_message', payload => {
-      console.log(payload);
-      this.openSnackBar('new_message');
+      this.openSnackBar('You got new message!');
     });
 
     channel.on('new_viewer', payload => {
-      console.log(payload);
-      this.openSnackBar('new_viewer');
+      this.openSnackBar('Your profile has been viewed by new user!');
 
     });
 
     channel.on('new_subscriber', payload => {
-      console.log(payload);
-      this.openSnackBar('new_subscriber');
+      this.openSnackBar('You have one new subscriber');
 
     });
 
@@ -79,8 +76,7 @@ export class SocketService {
     });
 
     channel.on('new_message', payload => {
-      console.log(payload);
-      this.openSnackBar('new_message');
+      this.openSnackBar('You have new message!');
 
     });
   }
@@ -98,7 +94,7 @@ export class SocketService {
       .receive('ok', (payload: ChatRoom) => {
         this.history.next(payload.messages);
         this.joined.next(true);
-        this.openSnackBar('Chat joied');
+        // this.openSnackBar('Chat joied');
       })
       .receive('error', resp => {
         this.joined.next(false);
@@ -106,9 +102,8 @@ export class SocketService {
       });
 
     this.activeChat.on('message_created', payload => {
-      console.log(payload);
       this.history.next(payload.messages);
-      this.openSnackBar('message_created');
+      this.openSnackBar('New message in chat!');
     });
   }
 

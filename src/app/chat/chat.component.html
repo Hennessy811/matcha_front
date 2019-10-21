@@ -9,7 +9,11 @@
     <div class="chat" *ngIf="(rooms$ | async) as rooms">
       <div *ngIf="messages">
         <div class="messages" #scrollMe>
-          <div class="mine messages-item" [ngClass]="{ 'mine': (me$ | async) === item.user.id, 'notmine': item.user.id !== (me$ | async) }" *ngFor="let item of messages">{{item.text}}</div>
+          <div class="mine messages-item"
+          [ngClass]="{ 'mine': (me$ | async) === item.user.id, 'notmine': item.user.id !== (me$ | async) }"
+          *ngFor="let item of messages">
+          {{item.text}}
+        </div>
         </div>
         <div class="input">
           <input type="text" matInput name="message" [(ngModel)]="message">

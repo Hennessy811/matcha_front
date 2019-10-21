@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 
@@ -33,15 +34,24 @@ export class UserEffects {
         this.auth.setToken(res.jwt);
         this.router.navigate(['feed']);
         return of(new LoginSuccess(res));
+      }),
+      catchError(() => {
+        this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+        return of({type: UserActionTypes.LoadMeError})
       })
-    ))
+    )),
+    catchError(() => of({type: UserActionTypes.LoadMeError}))
   );
 
   @Effect()
   uploadPhoto$ = this.actions$.pipe(
     ofType(UserActionTypes.UploadPhoto),
     switchMap((action: any) => this.user.uploadPhoto(action.payload).pipe(
-      switchMap((res: any) => of({type: UserActionTypes.UploadPhotoSuccess, payload: res.data}))
+      switchMap((res: any) => of({type: UserActionTypes.UploadPhotoSuccess, payload: res.data})),
+      catchError(() => {
+        this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+        return of({type: UserActionTypes.LoadMeError})
+      })
     ))
   );
 
@@ -49,16 +59,23 @@ export class UserEffects {
   loadMe$ = this.actions$.pipe(
     ofType(UserActionTypes.LoadMe),
     switchMap(() => this.user.getMe().pipe(
-        switchMap((res: User) => of({type: UserActionTypes.LoadMeSuccess, payload: res}))
-      )),
-    catchError(() => of({type: UserActionTypes.LoadMeError}))
+        switchMap((res: User) => of({type: UserActionTypes.LoadMeSuccess, payload: res})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
+      ))
   );
 
   @Effect()
   loadUser$ = this.actions$.pipe(
     ofType(UserActionTypes.LoadUser),
     switchMap(({payload}) => this.user.getOne(payload).pipe(
-        switchMap((res: User) => of({type: UserActionTypes.LoadUserSuccess, payload: res}))
+        switchMap((res: User) => of({type: UserActionTypes.LoadUserSuccess, payload: res})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
       ))
   );
 
@@ -67,7 +84,11 @@ export class UserEffects {
     ofType(UserActionTypes.UpdateMe),
     switchMap(({ payload }) => this.user.setMe(payload)
       .pipe(
-        switchMap((res: User) => of({type: UserActionTypes.UpdateMeSuccess, payload: res}))
+        switchMap((res: User) => of({type: UserActionTypes.UpdateMeSuccess, payload: res})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
       ))
   );
 
@@ -75,16 +96,32 @@ export class UserEffects {
   loadUsers$ = this.actions$.pipe(
     ofType(UserActionTypes.LoadUsers),
     switchMap(() => this.user.getList().pipe(
-        switchMap((res: User[]) => of({type: UserActionTypes.LoadUsersSuccess, payload: res}))
-      ))
+        switchMap((res: User[]) => of({type: UserActionTypes.LoadUsersSuccess, payload: res})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
+      )),
+      catchError(() => {
+        this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+        return of({type: UserActionTypes.LoadMeError})
+      })
   );
 
   @Effect()
   setMain$ = this.actions$.pipe(
     ofType(UserActionTypes.SetMain),
     switchMap(({payload}) => this.user.setMain(payload).pipe(
-        switchMap((res: any) => of({type: UserActionTypes.SetMainSuccess, payload: res.data}))
-      ))
+        switchMap((res: any) => of({type: UserActionTypes.SetMainSuccess, payload: res.data})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
+      )),
+      catchError(() => {
+        this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+        return of({type: UserActionTypes.LoadMeError})
+      })
   );
 
   @Effect()
@@ -94,6 +131,10 @@ export class UserEffects {
       this.auth.logout();
       this.router.navigate(['login']);
       return of(new LogoutSuccess());
+    }),
+    catchError(() => {
+      this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+      return of({type: UserActionTypes.LoadMeError})
     })
   );
 
@@ -101,8 +142,16 @@ export class UserEffects {
   connectWithUser$ = this.actions$.pipe(
     ofType(UserActionTypes.ConnectWithUser),
     switchMap(({payload}) => this.user.connectWithUser(payload).pipe(
-      switchMap(() => of(new ConnectWithUserSuccess()))
-    ))
+      switchMap(() => of(new ConnectWithUserSuccess())),
+      catchError(() => {
+        this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+        return of({type: UserActionTypes.LoadMeError})
+      })
+    )),
+    catchError(() => {
+      this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+      return of({type: UserActionTypes.LoadMeError})
+    })
   );
 
   @Effect()
@@ -110,15 +159,27 @@ export class UserEffects {
     ofType(UserActionTypes.DisconnectWithUser),
     switchMap(({payload}) => this.user.disconnectWithUser(payload).pipe(
       switchMap(() => of(new DisconnectWithUserSuccess()))
-    ))
+    )),
+    catchError(() => {
+      this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+      return of({type: UserActionTypes.LoadMeError})
+    })
   );
 
   @Effect()
   resetPw$ = this.actions$.pipe(
     ofType(UserActionTypes.Restore),
     switchMap(({payload}) => this.user.resetPw(payload).pipe(
-      switchMap(() => of(new RestorePasswodSuccess()))
-    ))
+      switchMap(() => of(new RestorePasswodSuccess())),
+      catchError(() => {
+        this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+        return of({type: UserActionTypes.LoadMeError})
+      })
+    )),
+    catchError(() => {
+      this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+      return of({type: UserActionTypes.LoadMeError})
+    })
   );
 
   @Effect()
@@ -127,13 +188,22 @@ export class UserEffects {
     switchMap(() => this.user.getChats().pipe(
       switchMap((res: {data: Room[]}) => {
         return of({type: RoomActionTypes.LoadRoomsSuccess, payload: res.data});
+      }),
+      catchError(() => {
+        this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+        return of({type: UserActionTypes.LoadMeError})
       })
-    ))
+    )),
+    catchError(() => {
+      this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+      return of({type: UserActionTypes.LoadMeError})
+    })
   );
 
   constructor(private actions$: Actions<UserActions>,
               private auth: AuthService,
               private router: Router,
+              private snackBar: MatSnackBar,
               private user: UserService) {
   }
 

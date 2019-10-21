@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   message: string;
   activeChatId: string | number;
   rooms$: Observable<State> = this.store.select(state => state.rooms);
+  //@ts-ignore
   me$: Observable<any> = this.store.select(state => state.user.profile.id);
   history: Subject<Message[]>;
   joined: Subject<boolean>;
