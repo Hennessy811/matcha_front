@@ -291,7 +291,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         popularTags: action.payload
-      }
+      };
 
     default:
       return state;

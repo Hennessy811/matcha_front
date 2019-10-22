@@ -2,6 +2,7 @@ export interface User {
   id?: string | number;
   email?: string;
   password?: string;
+  blocklist?: User[];
   fame_rating?: number;
   username?: string;
   connected?: boolean;

@@ -120,7 +120,7 @@ export class UserEffects {
   @Effect()
   blockUserSuccess$ = this.actions$.pipe(
     ofType(UserActionTypes.UnBlockUser),
-    switchMap(({ payload }) => this.user.blockUser(payload)
+    switchMap(({ payload }) => this.user.unblockUser(payload)
       .pipe(
         switchMap(() => of({type: UserActionTypes.UnBlockUserSuccess})),
         catchError(() => {

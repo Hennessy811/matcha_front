@@ -22,6 +22,7 @@ export class GuestUserComponent implements OnInit {
     private store: Store<UserState>,
   ) { }
 
+  me$: Observable<User> = this.store.select(state => state.user.profile);
   profile$: Observable<User> = this.store.select(state => state.user.viewProfile);
   allPhotos$ = this.store.select(state => state.user.viewProfile.photos.filter(item => !item.is_main));
   avatar$ = this.store.select(state => state.user.viewProfile.photos.find(item => item.is_main));
@@ -41,6 +42,11 @@ export class GuestUserComponent implements OnInit {
     }
     return false;
   });
+
+  getIsBlocked(me: User, id) {
+    console.log(me.blocklist.find(item => item.id === id));
+    return !!me.blocklist.find(item => item.id === id);
+  }
 
   connect(id) {
     this.store.dispatch({type: UserActionTypes.ConnectWithUser, payload: id});

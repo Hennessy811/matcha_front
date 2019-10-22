@@ -166,4 +166,15 @@
     </div>
   </div>
 
+  <br>
+  <mat-divider></mat-divider>
+
+  <div *ngIf="profile.blocklist.length">
+    <h2>Blocked users:</h2>
+
+    <div *ngFor="let user of profile.blocklist" class="cursor" [routerLink]="['/profile/' + user.id]">
+      {{user.username}}<br>
+    </div>
+  </div>
+
 </div>

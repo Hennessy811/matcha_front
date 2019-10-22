@@ -52,7 +52,8 @@
   <br />
 
   <mat-icon (click)="report()">report</mat-icon>
-  <mat-icon (click)="block(profile.id)">block</mat-icon>
+  <mat-icon (click)="block(profile.id)" *ngIf="!getIsBlocked((me$ | async), profile.id)">block</mat-icon>
+  <mat-icon (click)="unblock(profile.id)" *ngIf="getIsBlocked((me$ | async), profile.id)">history</mat-icon>
 
   <mat-divider></mat-divider>
 
