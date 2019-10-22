@@ -29,7 +29,7 @@ export class FeedComponent implements OnInit {
   step = 1;
   ageFrom = 18;
   ageTo = 118;
-  radius = 100;
+  radius = 15000;
   frate = 0;
   showSettings = false;
   sorted: string = null;
@@ -57,17 +57,17 @@ export class FeedComponent implements OnInit {
 
   getDistanceFromMe(coords) {
     if (!this.myCoords) { return ''; }
-    return getDistance({
+    return Math.round(getDistance({
       lat: coords[1],
       lon: coords[0]
-    }, this.myCoords) / 1000;
+    }, this.myCoords) / 10) / 100;
   }
 
   filter() {
     this.store.dispatch(new FilterUsers({
       ageFrom: this.ageFrom,
       ageTo: this.ageTo,
-      radius: this.radius,
+      radius: this.radius*1000,
       frate: this.frate
     }));
     // if (this.sorted) {

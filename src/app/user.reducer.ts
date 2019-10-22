@@ -69,8 +69,6 @@ export function reducer(state = initialState, action: UserActions): State {
           lon: state.feed[i].location.coordinates[0]
         });
 
-        console.log(dist, action.payload["radius"]);
-
         if (
           dist <= action.payload["radius"] &&
           state.feed[i].age >= action.payload["ageFrom"] &&
