@@ -104,7 +104,7 @@ export class SocketService {
 
     this.activeChat.on('message_created', payload => {
       this.history.next(payload.messages);
-      this.openSnackBar('New message in chat!');
+      // this.openSnackBar('New message in chat!');
     });
   }
 
