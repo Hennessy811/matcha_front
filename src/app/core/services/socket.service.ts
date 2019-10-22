@@ -92,6 +92,7 @@ export class SocketService {
     this.activeChat
       .join()
       .receive('ok', (payload: ChatRoom) => {
+        console.log(payload);
         this.history.next(payload.messages);
         this.joined.next(true);
         // this.openSnackBar('Chat joied');
@@ -117,6 +118,10 @@ export class SocketService {
 
   public getHistory(): Subject<Message[]> {
     return this.history;
+  }
+
+  public getActiveChatId() {
+    return this.activeChatId;
   }
 
   public getIsJoined(): Subject<boolean> {

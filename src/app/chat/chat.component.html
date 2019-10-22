@@ -2,7 +2,13 @@
   <div class="flex align-top" *ngIf="(rooms$ | async) as rooms">
     <div class="list">
       <mat-list>
-        <mat-list-item *ngFor="let room of rooms.rooms" class="cursor chat-item">{{findChatGuest(room, me$ | async)}}</mat-list-item>
+        <mat-list-item
+          *ngFor="let room of rooms.rooms"
+          [ngClass]="{'active-chat': room.id === socket.getActiveChatId()}"
+          class="cursor chat-item"
+          (click)="switchRoom(room.id)">
+          {{findChatGuest(room, me$ | async)}}
+        </mat-list-item>
       </mat-list>
     </div>
 
@@ -16,7 +22,7 @@
         </div>
         </div>
         <div class="input">
-          <input type="text" matInput name="message" [(ngModel)]="message">
+          <input (keypress)="onKeyPress($event)" type="text" matInput name="message" [(ngModel)]="message">
           <button mat-stroked-button (click)="send()">Send</button>
         </div>
       </div>
