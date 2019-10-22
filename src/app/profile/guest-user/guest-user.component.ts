@@ -6,6 +6,8 @@ import {Observable} from 'rxjs';
 import {User} from '../../core/User.interface';
 import {UserState} from '../../user.reducer';
 import {map} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material';
+import {store} from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-guest-user',
@@ -16,6 +18,7 @@ export class GuestUserComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
     private store: Store<UserState>,
   ) { }
 
@@ -45,6 +48,20 @@ export class GuestUserComponent implements OnInit {
 
   disconnect(id) {
     this.store.dispatch({type: UserActionTypes.DisconnectWithUser, payload: id});
+  }
+
+  report() {
+    this.snackBar.open("Reported", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+  }
+
+  block(id) {
+    this.store.dispatch({type: UserActionTypes.BlockUser, payload: id})
+    this.snackBar.open("Blocked", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+  }
+
+  unblock(id) {
+    this.store.dispatch({type: UserActionTypes.UnBlockUser, payload: id})
+    this.snackBar.open("Unblocked", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
   }
 
   ngOnInit() {

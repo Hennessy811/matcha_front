@@ -37,6 +37,28 @@ export class UserService {
     return this.http.post(`${environment.baseURL}me`, {user: props}, httpOptions);
   }
 
+  blockUser(props: number | string) {
+    const token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.post(`${environment.baseURL}block/${props}`, {}, httpOptions);
+  }
+
+  unblockUser(props: number | string) {
+    const token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.post(`${environment.baseURL}unblock/${props}`, {}, httpOptions);
+  }
+
   resetPw(props) {
     const httpOptions = {
       headers: new HttpHeaders({

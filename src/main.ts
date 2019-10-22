@@ -7,6 +7,12 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
+  console.info = () => {};
+
+  console.log('beepboop');
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)

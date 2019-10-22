@@ -105,6 +105,32 @@ export class UserEffects {
   );
 
   @Effect()
+  blockUser$ = this.actions$.pipe(
+    ofType(UserActionTypes.BlockUser),
+    switchMap(({ payload }) => this.user.blockUser(payload)
+      .pipe(
+        switchMap(() => of({type: UserActionTypes.BlockUserSuccess})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
+      ))
+  );
+
+  @Effect()
+  blockUserSuccess$ = this.actions$.pipe(
+    ofType(UserActionTypes.UnBlockUser),
+    switchMap(({ payload }) => this.user.blockUser(payload)
+      .pipe(
+        switchMap(() => of({type: UserActionTypes.UnBlockUserSuccess})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
+      ))
+  );
+
+  @Effect()
   loadUsers$ = this.actions$.pipe(
     ofType(UserActionTypes.LoadUsers),
     switchMap(() => this.user.getList().pipe(

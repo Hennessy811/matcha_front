@@ -14,7 +14,7 @@
 
   <br/>
 
-  <mat-card *ngIf="profile.photos">
+  <mat-card *ngIf="profile.photos && profile.photos.length">
     <div class="photos">
       <div class="main" *ngIf="(avatar$ | async) as avatar">
         <img [src]="avatar.url" alt="avatar">
@@ -28,6 +28,9 @@
     </div>
   </mat-card>
   <br>
+
+  <mat-icon (click)="report()">report</mat-icon>
+  <mat-icon (click)="block(profile.id)">block</mat-icon>
 
   <mat-divider></mat-divider>
 
@@ -43,8 +46,17 @@
   <div>
     Bio: {{ profile.biography }}
   </div>
+  <br>
   <div>
-    E-mail: {{ profile.email }}
+    Fame rating: {{ profile.fame_rating }}
+  </div>
+  <br>
+  <div>
+    Preferences: {{ profile.preferences }}
+  </div>
+  <br>
+  <div *ngIf="profile.last_seen">
+    Last seen: {{ profile.last_seen }}
   </div>
 
   <br/>
@@ -52,6 +64,7 @@
   <div *ngIf="profile.interests.length">
       Interests:
       <div>
+    <br>
         <mat-chip-list>
           <mat-chip *ngFor="let interest of profile.interests">{{interest}}</mat-chip>
         </mat-chip-list>

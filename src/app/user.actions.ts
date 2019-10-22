@@ -6,6 +6,10 @@ export enum UserActionTypes {
   Restore = 'Restore PW',
   RestoreSuccess = 'Restore PWSuccess',
   GetInterests = 'Get interests',
+  BlockUser = 'Block user',
+  UnBlockUser = 'UnBlock user',
+  BlockUserSuccess = 'Block userSuccess',
+  UnBlockUserSuccess = 'UnBlock userSuccess',
   GetInterestsSuccess = 'GetInterestsSuccess',
   SortUsersDistance = '[User] Sort Users Distance',
   SortUsersFrate = '[User] Sort Users Frate',
@@ -93,6 +97,30 @@ export class RestorePasswod implements Action {
   readonly type = UserActionTypes.Restore;
   payload: any;
   constructor(payload: string) {}
+}
+
+export class BlockUser implements Action {
+  readonly type = UserActionTypes.BlockUser;
+  payload: any;
+  constructor(payload: string | number) {}
+}
+
+export class UnBlockUser implements Action {
+  readonly type = UserActionTypes.UnBlockUser;
+  payload: any;
+  constructor(payload: string | number) {}
+}
+
+export class BlockUserSuccess implements Action {
+  readonly type = UserActionTypes.UnBlockUserSuccess;
+  payload: any;
+  constructor(payload: string | number) {}
+}
+
+export class UnBlockUserSuccess implements Action {
+  readonly type = UserActionTypes.UnBlockUserSuccess;
+  payload: any;
+  constructor(payload: string | number) {}
 }
 
 export class RestorePasswodSuccess implements Action {
@@ -224,6 +252,10 @@ export type UserActions =
   | LoadChats
   | GetInterests
   | GetInterestsSuccess
+  | BlockUser
+  | UnBlockUser
+  | UnBlockUserSuccess
+  | BlockUserSuccess
   | LoadChatsSuccess
   | RestorePasswodSuccess
   | SortUsersDistance
