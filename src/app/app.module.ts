@@ -18,7 +18,7 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatToolbarModule, MatCheckboxModule, MatSelectModule,
-  MatSliderModule, MatRadioModule, MatListModule, MatSnackBarModule, MatTabsModule
+  MatSliderModule, MatRadioModule, MatListModule, MatSnackBarModule, MatTabsModule, MatAutocompleteModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EffectsModule} from '@ngrx/effects';
@@ -88,6 +88,7 @@ import { RestorePasswordComponent } from './restore-password/restore-password.co
     MatDividerModule,
     MatListModule,
     MatTabsModule,
+    MatAutocompleteModule,
   ],
   providers: [ApplicationGuard],
   bootstrap: [AppComponent]

@@ -17,9 +17,6 @@ interface StringMap { [key: string]: any; }
 })
 export class UserProfileComponent implements OnInit {
 
-  profile$: Observable<User>;
-  allPhotos$: Observable<Photo[]>;
-  avatar$: Observable<Photo>;
   fileToUpload: File = null;
 
   ages: number[];
@@ -38,11 +35,16 @@ export class UserProfileComponent implements OnInit {
     private store: Store<UserState>
   ) { }
 
+
+  profile$ = this.store.select(state => state.user.profile);
+  tags$ = this.store.select(state => state.user.popularTags);
+  allPhotos$ = this.store.select(state => state.user.profile.photos.filter(item => !item.is_main));
+  avatar$ = this.store.select(state => state.user.profile.photos.find(item => item.is_main));
+
+  suggestedTags;
+
   ngOnInit() {
     this.ages = Array(100).fill(0).map((x, i) => i);
-    this.profile$ = this.store.select(state => state.user.profile);
-    this.allPhotos$ = this.store.select(state => state.user.profile.photos.filter(item => !item.is_main));
-    this.avatar$ = this.store.select(state => state.user.profile.photos.find(item => item.is_main));
 
     this.store.dispatch({ type: UserActionTypes.LoadMe });
     this.store.dispatch({ type: UserActionTypes.GetInterests });
@@ -92,10 +94,19 @@ export class UserProfileComponent implements OnInit {
     this.store.dispatch({type: UserActionTypes.UpdateMe, payload: data});
   }
 
+  onTagChange(event) {
+    this.tags$.subscribe(tags => {
+      this.suggestedTags = tags
+        .filter(item => item.toLowerCase().includes(event.toLowerCase()))
+        .map(item => item.slice(1));
+    }).unsubscribe();
+    console.log(this.suggestedTags);
+  }
+
   saveTag() {
     this.profile$.subscribe(res => {
       const { interests } = res;
-      if (interests.includes(this.newTag) || !this.newTag) { return; }
+      if (interests.map(item => item.slice(1)).includes(this.newTag) || !this.newTag) { return; }
       if (this.newTag.includes('#') || this.newTag.includes(' ')) { return; }
 
       interests.push(`#${this.newTag}`);
