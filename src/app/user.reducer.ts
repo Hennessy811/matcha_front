@@ -196,7 +196,7 @@ export function reducer(state = initialState, action: UserActions): State {
         isError: false,
         profile: {
           ...state.profile,
-          photos: [...state.profile.photos, action.payload]
+          photos: [...state.profile.photos.map(item => ({ ...item, is_main: false, })), ...action.payload]
         }
       };
 
