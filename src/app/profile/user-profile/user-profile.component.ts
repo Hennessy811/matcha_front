@@ -86,7 +86,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   setMe(data: StringMap) {
-    console.log(data);
+    // console.log(data);
     this.store.dispatch({type: UserActionTypes.UpdateMe, payload: data});
   }
 

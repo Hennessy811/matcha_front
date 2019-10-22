@@ -5,6 +5,9 @@
   min-height: 500px
   display: flex
   flex-direction: column
+  margin: 0
+  @media (max-width: 767px)
+    width: 100%
   .messages
     flex: 15 1 auto
     padding: 10px
@@ -28,21 +31,31 @@
       background-color: rgba(255, 246, 224, 0.81)
 
   .input
+    max-width: 100%
     padding: 10px
     flex: 0 1 auto
     border: 1px solid
     display: flex
+    justify-content: space-between
+    align-items: flex-end
+    @media (max-width: 380px)
+      display: block
     input
       padding: 10px 15px
       font-size: 14px
       flex: 1 1 auto
-
+      max-width: 54%
 
 .list
   width: 30%
+  @media (max-width: 767px)
+    display: block
+    width: auto
 
 .align-top
   align-items: flex-start
+  @media (max-width: 767px)
+    display: block
 
 .chat-item
 

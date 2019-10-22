@@ -39,7 +39,7 @@ export class RegistrationComponent implements OnInit {
     };
 
     this.auth.signUp(user).subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.snackBar.open(res.ok.detail || res.error.detail, 'Close', {horizontalPosition: 'start', duration: 5 * 1000});
     });
   }
