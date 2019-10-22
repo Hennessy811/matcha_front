@@ -14,7 +14,7 @@ export class AuthService {
   activate(token: string) {
     this.http.get(`${environment.baseURL}activate/${token}`)
       .subscribe(res => {
-        console.log(res);
+        // console.log(res);
         // this.router.navigate(['/login'])
       })
   }

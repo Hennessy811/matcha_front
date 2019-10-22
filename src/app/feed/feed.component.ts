@@ -33,7 +33,7 @@ export class FeedComponent implements OnInit {
   frate = 0;
   showSettings = false;
   sorted: string = null;
-  sortedList: string[] = ['age', 'distance', 'tag', 'frate'];
+  sortedList: string[] = ['age', 'distance', 'frate'];
 
   myCoords = null;
   // ageSort: boolean = false;
@@ -88,7 +88,7 @@ export class FeedComponent implements OnInit {
   }
 
   getOne() {
-    this.users.getOne(11).subscribe(user => console.log(user));
+    // this.users.getOne(11).subscribe(user => console.log(user));
   }
 
 }
