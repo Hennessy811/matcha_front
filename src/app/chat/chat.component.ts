@@ -47,6 +47,18 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
+  findChatGuest(room: Room, me) {
+    if (room && me) {
+      console.log(room, me);
+      return room.users.find(user => user.id !== me).username;
+    }
+    return '';
+  }
+
+  switchRoom(id) {
+    console.log('beepboop');
+  }
+
   send() {
     this.socket.send(this.message);
     this.message = '';
