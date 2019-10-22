@@ -15,12 +15,13 @@ export class RegistrationComponent implements OnInit {
   ) {
   }
 
-  username = new FormControl('hennessy811');
-  fname = new FormControl('Foo');
-  lname = new FormControl('Bar');
-  mail = new FormControl('mitia2022@gmail.com');
-  password = new FormControl('foobar21');
-  passwordConfirmation = new FormControl('foobar21');
+  username = new FormControl('');
+  fname = new FormControl('');
+  lname = new FormControl('');
+  mail = new FormControl('');
+  password = new FormControl('');
+  passwordConfirmation = new FormControl('');
+
 
   onSignUp() {
     const user: User = {

@@ -28,8 +28,9 @@ export class UserProfileComponent implements OnInit {
     'female',
   ];
   preferencesList: string[] = [
+    'bisexual',
     'male',
-    'female',
+    'female'
   ];
   newTag: string;
 
