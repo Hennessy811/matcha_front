@@ -11,13 +11,12 @@ import {UserState} from '../user.reducer';
 })
 export class RestorePasswordComponent implements OnInit {
 
-  login = new FormControl('mitia2022@gmail.com');
+  login = new FormControl('');
 
   constructor(private store: Store<UserState>) { }
 
   ngOnInit() {
   }
-
 
   onRestore() {
     const user = {

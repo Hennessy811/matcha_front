@@ -1,10 +1,10 @@
 <form class="login-form">
     <mat-form-field class="form-field">
-      <input matInput placeholder="Email" [formControl]="login">
+      <input matInput placeholder="Email" type="email" [formControl]="login">
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <input matInput placeholder="Password" [formControl]="pass">
+      <input matInput placeholder="Password" type="password" [formControl]="pass">
     </mat-form-field>
 </form>
 <div class="cursor" [routerLink]="['/restore']">
