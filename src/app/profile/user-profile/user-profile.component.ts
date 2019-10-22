@@ -99,7 +99,7 @@ export class UserProfileComponent implements OnInit {
         .filter(item => item.toLowerCase().includes(event.toLowerCase()))
         .map(item => item.slice(1));
     }).unsubscribe();
-    console.log(this.suggestedTags);
+    // console.log(this.suggestedTags);
   }
 
   saveTag() {
