@@ -6,9 +6,7 @@
 </div>
 
 <div class="sort-panel" *ngIf="showSettings">
-
   <div class="row">
-
     <div>
       <mat-form-field class="form-field">
         <mat-label>Sort by </mat-label>
@@ -16,31 +14,38 @@
           <mat-option
             *ngFor="let item of sortedList"
             [value]="item"
-            (click)="sort()"> {{item}} </mat-option>
+            (click)="sort()"
+          >
+            {{ item }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field class="form-field">
-        <input matInput
-               type="number"
-               placeholder="Change distance"
-               (change)="filter()"
-               [(ngModel)]="radius">
+        <input
+          matInput
+          type="number"
+          placeholder="Change distance"
+          (change)="filter()"
+          [(ngModel)]="radius"
+        />
       </mat-form-field>
     </div>
   </div>
 
-    <div>
-      <mat-form-field class="form-field">
-        <input matInput
-               type="number"
-               placeholder="Fame rate"
-               (change)="filter()"
-               [(ngModel)]="frate">
-      </mat-form-field>
-    </div>
+  <div>
+    <mat-form-field class="form-field">
+      <input
+        matInput
+        type="number"
+        placeholder="Fame rate"
+        (change)="filter()"
+        [(ngModel)]="frate"
+      />
+    </mat-form-field>
+  </div>
 
   <h2>Age gap:</h2>
   <div class="age-gap">
@@ -52,10 +57,11 @@
       [step]="step"
       [thumbLabel]="thumbLabel"
       (change)="filter()"
-      [(ngModel)]="ageFrom">
+      [(ngModel)]="ageFrom"
+    >
     </mat-slider>
     <span>{{ ageFrom }}</span>
-    <br>
+    <br />
     <span class="label">To: </span>
     <mat-slider
       class="age-slider"
@@ -64,43 +70,62 @@
       [step]="step"
       [thumbLabel]="thumbLabel"
       (change)="filter()"
-      [(ngModel)]="ageTo">
+      [(ngModel)]="ageTo"
+    >
     </mat-slider>
     <span>{{ ageTo }}</span>
   </div>
 
   <mat-divider></mat-divider>
-  </div>
+</div>
 
-
-<div *ngIf="(me$ | async) as me">
-  <div class="feed-list" *ngIf="(profiles$ | async) as profiles">
+<div *ngIf="me$ | async as me">
+  <div class="feed-list" *ngIf="profiles$ | async as profiles">
     <div *ngFor="let profile of profiles">
       <div class="feed-list-item" *ngIf="me.id !== profile.id">
         <mat-card>
           <div class="info">
             <div *ngIf="me$ | async">
-              {{getDistanceFromMe(profile.location.coordinates)}} km away
+              {{ getDistanceFromMe(profile.location.coordinates) }} km away
             </div>
 
             <div class="flex cursor" [routerLink]="['/profile', profile.id]">
-              <span class="gender">{{ profile.gender === 'male' ? '🙎‍♂️' : '🙎‍♀️' }}</span>
-              <h2>{{profile.fname}} {{profile.lname}}</h2>
+              <span class="gender">{{
+                profile.gender === "male" ? "🙎‍♂️" : "🙎‍♀️"
+              }}</span>
+              <span class="connection">{{
+                profile.connected ? "✅" : ""
+              }}</span>
+              <h2>{{ profile.fname }} {{ profile.lname }}</h2>
             </div>
-            <p *ngIf="profile.is_active" class="online">Online</p>
-            <p>Username: {{profile.username}}</p>
-            <p>Age: {{profile.age}}</p>
+            <div *ngIf="profile.last_seen">
+              <mat-divider></mat-divider>
+              <div class="lastseen">Last seen: {{ profile.last_seen }}</div>
+              <mat-divider></mat-divider>
+            </div>
+            <p>Username: {{ profile.username }}</p>
+            <p>Age: {{ profile.age }}</p>
+            <p>Fame Rating: {{ profile.fame_rating }}</p>
 
             <mat-chip-list *ngIf="profile.interests.length">
-              <mat-chip *ngFor="let interest of profile.interests">{{interest}}</mat-chip>
+              <mat-chip *ngFor="let interest of profile.interests">{{
+                interest
+              }}</mat-chip>
             </mat-chip-list>
 
-            <p>Prefs: <span class="gender">{{ profile.preferences === 'male' ? '🙎‍♂️' : profile.preferences === 'bisexual' ? '🙎‍♂️🙎‍♀️' : '🙎‍♀️' }}</span></p>
+            <p>
+              Prefs:
+              <span class="gender">{{
+                profile.preferences === "male"
+                  ? "🙎‍♂️"
+                  : profile.preferences === "bisexual"
+                  ? "🙎‍♂️🙎‍♀️"
+                  : "🙎‍♀️"
+              }}</span>
+            </p>
           </div>
         </mat-card>
       </div>
     </div>
-
-
   </div>
 </div>
