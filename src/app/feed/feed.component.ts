@@ -67,7 +67,7 @@ export class FeedComponent implements OnInit {
     this.store.dispatch(new FilterUsers({
       ageFrom: this.ageFrom,
       ageTo: this.ageTo,
-      radius: this.radius*1000,
+      radius: this.radius * 1000,
       frate: this.frate
     }));
     // if (this.sorted) {

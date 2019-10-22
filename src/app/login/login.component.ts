@@ -13,8 +13,8 @@ export class LoginComponent {
 
   constructor(private store: Store<UserState>) { }
 
-  login = new FormControl('mitia2022@gmail.com');
-  pass = new FormControl('foobar21');
+  login = new FormControl('');
+  pass = new FormControl('');
 
   onSignIn() {
     const user = {
