@@ -68,6 +68,18 @@ export class UserEffects {
   );
 
   @Effect()
+  loadInterests$ = this.actions$.pipe(
+    ofType(UserActionTypes.GetInterests),
+    switchMap(() => this.user.getInterests().pipe(
+        switchMap((res: User) => of({type: UserActionTypes.GetInterestsSuccess, payload: res.data})),
+        catchError(() => {
+          this.snackBar.open("Error occured... Please, reload the page", 'Close', {horizontalPosition: 'start', duration: 25 * 1000});
+          return of({type: UserActionTypes.LoadMeError})
+        })
+      ))
+  );
+
+  @Effect()
   loadUser$ = this.actions$.pipe(
     ofType(UserActionTypes.LoadUser),
     switchMap(({payload}) => this.user.getOne(payload).pipe(

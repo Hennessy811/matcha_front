@@ -44,6 +44,7 @@ export class UserProfileComponent implements OnInit {
     this.avatar$ = this.store.select(state => state.user.profile.photos.find(item => item.is_main));
 
     this.store.dispatch({ type: UserActionTypes.LoadMe });
+    this.store.dispatch({ type: UserActionTypes.GetInterests });
   }
 
   setMain(id) {

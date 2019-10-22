@@ -22,6 +22,10 @@ export class UserService {
     return this.http.get(`${environment.baseURL}me`, httpOptions)
   }
 
+  getInterests(): Observable<any> {
+    return this.http.get(`${environment.baseURL}interests`);
+  }
+
   setMe(props) {
     const token = localStorage.getItem('token');
     const httpOptions = {

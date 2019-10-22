@@ -14,6 +14,7 @@ export interface State {
   feed: User[];
   filterFeed: User[];
   viewProfile: User;
+  popularTags: string[];
 }
 
 export const initialState: State = {
@@ -24,6 +25,7 @@ export const initialState: State = {
   feed: null,
   filterFeed: null,
   viewProfile: null,
+  popularTags: [],
 };
 
 export function reducer(state = initialState, action: UserActions): State {
@@ -277,6 +279,19 @@ export function reducer(state = initialState, action: UserActions): State {
           subscriptions: state.viewProfile.subscriptions.filter(item => item.id !== state.profile.id),
         }
       };
+
+    case UserActionTypes.GetInterests:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+
+    case UserActionTypes.GetInterestsSuccess:
+      return {
+        ...state,
+        popularTags: action.payload
+      }
 
     default:
       return state;

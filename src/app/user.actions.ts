@@ -1,9 +1,12 @@
 import { Action } from '@ngrx/store';
 import {User} from "./core/User.interface";
+import {last} from 'rxjs/operators';
 
 export enum UserActionTypes {
   Restore = 'Restore PW',
   RestoreSuccess = 'Restore PWSuccess',
+  GetInterests = 'Get interests',
+  GetInterestsSuccess = 'GetInterestsSuccess',
   SortUsersDistance = '[User] Sort Users Distance',
   SortUsersFrate = '[User] Sort Users Frate',
   SortUsersAge = '[User] Sort Users Age',
@@ -42,6 +45,16 @@ export class LoadChats implements Action {
 
 export class LoadChatsSuccess implements Action {
   readonly type = UserActionTypes.LoadChatsSuccess;
+  payload: any;
+  constructor(payload: any) {}
+}
+
+export class GetInterests implements Action {
+  readonly type = UserActionTypes.GetInterests;
+}
+
+export class GetInterestsSuccess implements Action {
+  readonly type = UserActionTypes.GetInterestsSuccess;
   payload: any;
   constructor(payload: any) {}
 }
@@ -209,6 +222,8 @@ export class DisconnectWithUserSuccess implements Action {
 export type UserActions =
   RestorePasswod
   | LoadChats
+  | GetInterests
+  | GetInterestsSuccess
   | LoadChatsSuccess
   | RestorePasswodSuccess
   | SortUsersDistance
