@@ -1,65 +1,87 @@
-<div class="info" *ngIf="(profile$ | async) as profile">
+<div class="info" *ngIf="profile$ | async as profile">
   <div class="fname">
     <h2>
-      <span class="gender">{{ profile.gender === 'male' ? '🙎‍♂️' : '🙎‍♀️' }}</span>
-      <span class="connection">{{ (isSubscribedOnMe$ | async) && (isSubscriber$ | async) ? '✅' : '' }}</span>
-      {{profile.fname}} {{profile.lname}}
+      <span class="gender">{{ profile.gender === "male" ? "🙎‍♂️" : "🙎‍♀️" }}</span>
+      <span class="connection">{{
+        (isSubscribedOnMe$ | async) && (isSubscriber$ | async) ? "✅" : ""
+      }}</span>
+      {{ profile.fname }} {{ profile.lname }}
       <span class="age">{{ profile.age }} y.o.</span>
     </h2>
 
-    <button class="btn" mat-stroked-button color="warn" *ngIf="isSubscriber$ | async" (click)="disconnect(profile.id)">Unsubscribe</button>
-    <button class="btn" mat-stroked-button color="primary" *ngIf="!(isSubscriber$ | async)" (click)="connect(profile.id)">Subscribe</button>
-    <br>
+    <button
+      class="btn"
+      mat-stroked-button
+      color="warn"
+      *ngIf="isSubscriber$ | async"
+      (click)="disconnect(profile.id)"
+    >
+      Unsubscribe
+    </button>
+    <button
+      class="btn"
+      mat-stroked-button
+      color="primary"
+      *ngIf="!(isSubscriber$ | async)"
+      (click)="connect(profile.id)"
+    >
+      Subscribe
+    </button>
+    <br />
   </div>
 
-  <br/>
+  <br />
 
   <mat-card *ngIf="profile.photos && profile.photos.length">
     <div class="photos">
-      <div class="main" *ngIf="(avatar$ | async) as avatar">
-        <img [src]="avatar.url" alt="avatar">
+      <div class="main" *ngIf="avatar$ | async as avatar">
+        <img [src]="avatar.url" alt="avatar" />
       </div>
 
-      <div class="other" *ngIf="(allPhotos$ | async) as allPhotos">
-        <div class="other-photo cursor" *ngFor="let photo of allPhotos" (click)="setMain(photo.id)">
-          <img [src]="photo.url" [alt]="photo.url">
+      <div class="other" *ngIf="allPhotos$ | async as allPhotos">
+        <div
+          class="other-photo cursor"
+          *ngFor="let photo of allPhotos"
+          (click)="setMain(photo.id)"
+        >
+          <img [src]="photo.url" [alt]="photo.url" />
         </div>
       </div>
     </div>
   </mat-card>
-  <br>
+  <br />
 
   <mat-icon (click)="report()">report</mat-icon>
   <mat-icon (click)="block(profile.id)">block</mat-icon>
 
   <mat-divider></mat-divider>
 
-  <div *ngIf="profile.last_seen || profile.is_active">
+  <div *ngIf="profile.last_seen">
     <mat-divider></mat-divider>
-    <div class="online" *ngIf="profile.is_active">Online</div>
-    <div class="lastseen" *ngIf="!profile.is_active && profile.last_seen">Last seen at {{profile.last_seen}}</div>
+    <div class="lastseen">Last seen: {{ profile.last_seen }}</div>
     <mat-divider></mat-divider>
   </div>
 
-  <br/>
+  <br />
 
   <div>
-    Bio: {{ profile.biography }}
+    Username: {{ profile.username }}
   </div>
-  <br>
+  <br />
   <div>
     Fame rating: {{ profile.fame_rating }}
   </div>
-  <br>
-  <div>
-    Preferences: {{ profile.preferences }}
-  </div>
-  <br>
+  <br />
   <div *ngIf="profile.last_seen">
     Last seen: {{ profile.last_seen }}
+  <br />
+  <div>
+    Biography: {{ profile.biography }}
   </div>
+  <br />
 
-  <br/>
+
+  <br />
 
   <div *ngIf="profile.interests.length">
       Interests:
@@ -70,7 +92,16 @@
         </mat-chip-list>
       </div>
   </div>
-
   <div>
+    <p>
+      Preferences:
+      <span class="gender">{{
+        profile.preferences === "male"
+          ? "🙎‍♂️"
+          : profile.preferences === "bisexual"
+          ? "🙎‍♂️🙎‍♀️"
+          : "🙎‍♀️"
+      }}</span>
+    </p>
   </div>
 </div>
