@@ -83,7 +83,6 @@ export class UserProfileComponent implements OnInit {
       this.setMe({
         fname: name[0],
         lname: name[1],
-        interests: '#lol'
       }
       );
     }
