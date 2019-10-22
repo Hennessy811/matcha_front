@@ -13,7 +13,6 @@ export class ConfirmationComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // console.log('beepboop');
     this.route.queryParams.subscribe(params => {
       this.auth.activate(params.token);
     }).unsubscribe();
