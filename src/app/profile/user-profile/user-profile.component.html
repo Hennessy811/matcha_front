@@ -24,11 +24,24 @@
     </mat-card>
   </ng-template>
 
+  <br>
+
   <div class="form-group">
     <input type="file"
            id="file"
            (change)="handleFileInput($event.target.files)">
   </div>
+
+  <br>
+
+  <mat-divider></mat-divider>
+
+  <div>
+    Fame rating: {{profile.fame_rating}}
+  </div>
+  <br>
+
+  <mat-divider></mat-divider>
 
   <app-user-pofile-item
     [fieldValue]="profile.fname + ' ' + profile.lname"
@@ -130,6 +143,22 @@
     <h2>Page viewed by:</h2>
 
     <div *ngFor="let user of profile.viewers" class="cursor" [routerLink]="['/profile/' + user.id]">
+      {{user.username}}<br>
+    </div>
+  </div>
+
+  <div *ngIf="profile.subscriptions.length">
+    <h2>My subscriptions:</h2>
+
+    <div *ngFor="let user of profile.subscriptions" class="cursor" [routerLink]="['/profile/' + user.id]">
+      {{user.username}}<br>
+    </div>
+  </div>
+
+  <div *ngIf="profile.subscribers.length">
+    <h2>My subscribers:</h2>
+
+    <div *ngFor="let user of profile.subscribers" class="cursor" [routerLink]="['/profile/' + user.id]">
       {{user.username}}<br>
     </div>
   </div>
