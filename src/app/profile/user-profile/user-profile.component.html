@@ -56,7 +56,7 @@
   </app-user-pofile-item>
 
 
-  <app-user-pofile-item [fieldValue]="profile.email" (changeValue)="setMe($event)" fieldName="e-mail">
+  <app-user-pofile-item [fieldValue]="profile.email" (changeValue)="setMe($event)" fieldName="email">
     <mat-form-field class="form-field">
       <input matInput placeholder="Edit your mail" [(ngModel)]="profile.email">
     </mat-form-field>

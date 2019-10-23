@@ -1,8 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../core/services/auth.service';
 import {User} from '../core/User.interface';
+import {Router} from "@angular/router";
 import {FormControl} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 @Component({
   selector: 'app-registration',
@@ -11,7 +16,7 @@ import {MatSnackBar} from '@angular/material';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private auth: AuthService,    private snackBar: MatSnackBar,
+  constructor(private auth: AuthService, private snackBar: MatSnackBar, private router: Router
   ) {
   }
 
@@ -21,7 +26,13 @@ export class RegistrationComponent implements OnInit {
   mail = new FormControl('');
   password = new FormControl('');
   passwordConfirmation = new FormControl('');
+  age = new FormControl('');
+  gender = new FormControl('');
 
+  genderList: string[] = [
+    'male',
+    'female',
+  ];
 
   onSignUp() {
     const user: User = {
@@ -31,18 +42,23 @@ export class RegistrationComponent implements OnInit {
       password_confirmation: this.passwordConfirmation.value,
       fname: this.fname.value,
       lname: this.lname.value,
-      age: 30,
-      biography: 'I\'m very cool!',
-      gender: 'male',
-      preferences: 'female',
-      interests: ['#sport', '#travel'],
-      location: {type: 'Point', coordinates: [100, 30]}
+      age: this.age.value,
+      gender: this.gender.value,
     };
 
     this.auth.signUp(user).subscribe(res => {
-      // console.log(res)
-      this.snackBar.open(res.ok.detail || res.error.detail, 'Close', {horizontalPosition: 'start', duration: 5 * 1000});
+      if (res.ok.detail) {
+        this.handleSuccess(res.ok.detail)
+      } else {
+        this.snackBar.open(res.error.detail, 'Close', {horizontalPosition: 'start', duration: 5 * 1000});
+      }
     });
+  }
+
+  async handleSuccess(message) {
+    this.snackBar.open(message, 'Close', {horizontalPosition: 'start', duration: 5 * 1000});
+    await sleep(2000)
+    this.router.navigate(['/login'])
   }
 
   ngOnInit() {
@@ -54,6 +70,8 @@ export class RegistrationComponent implements OnInit {
       this.lname.value &&
       this.mail.value &&
       this.password.value &&
+      this.age.value &&
+      this.gender.value &&
       this.passwordConfirmation.value === this.password.value;
   }
 }

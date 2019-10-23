@@ -18,7 +18,7 @@ export class AuthService {
     this.http.get(`${environment.baseURL}activate/${token}`)
       .pipe(
         switchMap(item => {
-          console.log(item);
+          // console.log(item);
           return of(null);
         }),
         catchError(() => {

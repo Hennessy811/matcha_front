@@ -44,7 +44,7 @@ export class GuestUserComponent implements OnInit {
   });
 
   getIsBlocked(me: User, id) {
-    console.log(me.blocklist.find(item => item.id === id));
+    // console.log(me.blocklist.find(item => item.id === id));
     return !!me.blocklist.find(item => item.id === id);
   }
 

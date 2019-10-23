@@ -12,7 +12,7 @@ if (environment.production) {
   console.error = () => {};
   console.info = () => {};
 
-  console.log('beepboop');
+  // console.log('beepboop');
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)

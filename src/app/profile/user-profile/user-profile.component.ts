@@ -7,6 +7,7 @@ import {Photo, User} from '../../core/User.interface';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {UserState} from '../../user.reducer';
+import {MatSnackBar} from '@angular/material';
 
 interface StringMap { [key: string]: any; }
 
@@ -32,6 +33,7 @@ export class UserProfileComponent implements OnInit {
   newTag: string;
 
   constructor(
+    private snackBar: MatSnackBar,
     private store: Store<UserState>
   ) { }
 
@@ -99,14 +101,19 @@ export class UserProfileComponent implements OnInit {
         .filter(item => item.toLowerCase().includes(event.toLowerCase()))
         .map(item => item.slice(1));
     }).unsubscribe();
-    console.log(this.suggestedTags);
+    // console.log(this.suggestedTags);
   }
 
   saveTag() {
+    const valid_interest_regex = /(?:\s|^)#[a-z0-9\-\.\_]+(?:\s|$)/i
+
     this.profile$.subscribe(res => {
       const { interests } = res;
       if (interests.map(item => item.slice(1)).includes(this.newTag) || !this.newTag) { return; }
-      if (this.newTag.includes('#') || this.newTag.includes(' ')) { return; }
+      if (!this.newTag.match(valid_interest_regex)) { 
+        this.snackBar.open('Invalid tag format.', 'Close', {horizontalPosition: 'start', duration: 5 * 1000});
+        return; }
+      
 
       interests.push(`#${this.newTag}`);
       this.setMe({ interests });
