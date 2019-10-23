@@ -38,7 +38,7 @@ export function reducer(state = initialState, action: UserActions): State {
         const coordsB = b.location.coordinates;
         const distA = Math.sqrt(coordsA[0] * coordsA[0] + coordsA[1] * coordsA[1]);
         const distB = Math.sqrt(coordsB[0] * coordsB[0] + coordsB[1] * coordsB[1]);
-        return distA - distB;
+        return distB - distA;
       });
       return {
         ...state,
