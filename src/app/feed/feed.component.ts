@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../core/services/user.service';
 import {Store} from '@ngrx/store';
 import {LoadUsers, FilterUsers, SortUsersAge, LoadMe,
-  SortUsersDistance} from '../user.actions';
+  SortUsersDistance, SortUsersFrate} from '../user.actions';
 import {User} from '../core/User.interface';
 import {Observable} from 'rxjs';
 import getDistance from 'geolib/es/getDistance';
@@ -76,15 +76,13 @@ export class FeedComponent implements OnInit {
   }
 
   sort() {
-    // console.log(this.sorted);
     if (this.sorted === this.sortedList[0]) {
       this.store.dispatch(new SortUsersAge());
     } else if (this.sorted === this.sortedList[1]) {
       this.store.dispatch(new SortUsersDistance());
-    } else if (this.sorted === this.sortedList[3]) {
-      this.store.dispatch(new SortUsersDistance());
+    } else if (this.sorted === this.sortedList[2]) {
+      this.store.dispatch(new SortUsersFrate());
     }
-    // if (this.ageSort)
   }
 
   getOne() {
