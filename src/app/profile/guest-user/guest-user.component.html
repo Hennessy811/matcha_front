@@ -40,9 +40,8 @@
 
       <div class="other" *ngIf="allPhotos$ | async as allPhotos">
         <div
-          class="other-photo cursor"
+          class="other-photo"
           *ngFor="let photo of allPhotos"
-          (click)="setMain(photo.id)"
         >
           <img [src]="photo.url" [alt]="just_photo" />
         </div>
@@ -51,9 +50,9 @@
   </mat-card>
   <br />
 
-  <mat-icon (click)="report()">report</mat-icon>
-  <mat-icon (click)="block(profile.id)" *ngIf="!getIsBlocked((me$ | async), profile.id)">block</mat-icon>
-  <mat-icon (click)="unblock(profile.id)" *ngIf="getIsBlocked((me$ | async), profile.id)">history</mat-icon>
+  <mat-icon class="cursor" (click)="report()">report</mat-icon>
+  <mat-icon class="cursor" (click)="block(profile.id)" *ngIf="!getIsBlocked((me$ | async), profile.id)">block</mat-icon>
+  <mat-icon class="cursor" (click)="unblock(profile.id)" *ngIf="getIsBlocked((me$ | async), profile.id)">history</mat-icon>
 
   <mat-divider></mat-divider>
 
