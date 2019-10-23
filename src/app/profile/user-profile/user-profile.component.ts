@@ -105,17 +105,17 @@ export class UserProfileComponent implements OnInit {
   }
 
   saveTag() {
-    const valid_interest_regex = /(?:\s|^)#[a-z0-9\-\.\_]+(?:\s|$)/i
+    const validInterestRegex = /(?:\s|^)#[a-z0-9\-\.\_]+(?:\s|$)/i
 
     this.profile$.subscribe(res => {
       const { interests } = res;
       if (interests.map(item => item.slice(1)).includes(this.newTag) || !this.newTag) { return; }
-      if (!this.newTag.match(valid_interest_regex)) { 
+      if (!this.newTag.match(validInterestRegex)) { 
         this.snackBar.open('Invalid tag format.', 'Close', {horizontalPosition: 'start', duration: 5 * 1000});
         return; }
       
 
-      interests.push(`#${this.newTag}`);
+      interests.push(`${this.newTag}`);
       this.setMe({ interests });
     }).unsubscribe();
     this.newTag = '';
