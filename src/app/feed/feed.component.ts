@@ -5,6 +5,7 @@ import {LoadUsers, FilterUsers, SortUsersAge, LoadMe,
   SortUsersDistance, SortUsersFrate} from '../user.actions';
 import {User} from '../core/User.interface';
 import {Observable} from 'rxjs';
+import {UserActionTypes} from '../user.actions';
 import getDistance from 'geolib/es/getDistance';
 import {UserState} from '../user.reducer';
 import {logger} from 'codelyzer/util/logger';
@@ -34,7 +35,8 @@ export class FeedComponent implements OnInit {
   showSettings = false;
   sorted: string = null;
   sortedList: string[] = ['age', 'distance', 'frate'];
-
+  tags$ = this.store.select(state => state.user.popularTags);
+  tags;
   myCoords = null;
   // ageSort: boolean = false;
 
@@ -44,6 +46,7 @@ export class FeedComponent implements OnInit {
         this.store.dispatch(new LoadUsers());
       }
     }).unsubscribe();
+    this.store.dispatch({ type: UserActionTypes.GetInterests });
 
     this.me$.subscribe(res => {
       if (res) {
@@ -53,6 +56,10 @@ export class FeedComponent implements OnInit {
         };
       }
     });
+    this.tags$.subscribe(tag => this.tags = tag
+      .map((item, i) => {return i <= 5 ? item.slice(1) : null})
+      .filter(item => item!== null)
+    );
   }
 
   getDistanceFromMe(coords) {
@@ -63,12 +70,13 @@ export class FeedComponent implements OnInit {
     }, this.myCoords) / 10) / 100;
   }
 
-  filter() {
+  filter(item) {
     this.store.dispatch(new FilterUsers({
       ageFrom: this.ageFrom,
       ageTo: this.ageTo,
       radius: this.radius * 1000,
-      frate: this.frate
+      frate: this.frate,
+      interests: item
     }));
     // if (this.sorted) {
     this.sort();
