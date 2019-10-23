@@ -21,7 +21,13 @@ export class RegistrationComponent implements OnInit {
   mail = new FormControl('');
   password = new FormControl('');
   passwordConfirmation = new FormControl('');
+  age = new FormControl('');
+  gender = new FormControl('');
 
+  genderList: string[] = [
+    'male',
+    'female',
+  ];
 
   onSignUp() {
     const user: User = {
@@ -31,12 +37,8 @@ export class RegistrationComponent implements OnInit {
       password_confirmation: this.passwordConfirmation.value,
       fname: this.fname.value,
       lname: this.lname.value,
-      age: 30,
-      biography: 'I\'m very cool!',
-      gender: 'male',
-      preferences: 'female',
-      interests: ['#sport', '#travel'],
-      location: {type: 'Point', coordinates: [100, 30]}
+      age: this.age.value,
+      gender: this.gender.value,
     };
 
     this.auth.signUp(user).subscribe(res => {
@@ -54,6 +56,8 @@ export class RegistrationComponent implements OnInit {
       this.lname.value &&
       this.mail.value &&
       this.password.value &&
+      this.age.value &&
+      this.gender.value &&
       this.passwordConfirmation.value === this.password.value;
   }
 }

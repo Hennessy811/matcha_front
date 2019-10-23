@@ -17,6 +17,17 @@
     </mat-form-field>
 
     <mat-form-field class="form-field">
+      <input matInput placeholder="Input age" type="number" [formControl]="age">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Select gender</mat-label>
+      <mat-select [formControl]="gender">
+        <mat-option *ngFor="let gender of genderList" [value]="gender">{{gender}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
         <input type="password" matInput placeholder="Input password" [formControl]="password">
     </mat-form-field>
 
