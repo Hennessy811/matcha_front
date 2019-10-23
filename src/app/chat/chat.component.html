@@ -1,4 +1,4 @@
-<mat-card *ngIf="(joined | async); else loader">
+<mat-card *ngIf="(joined | async); else noChat">
   <div class="flex align-top" *ngIf="(rooms$ | async) as rooms">
     <div class="list">
       <mat-list>
@@ -28,8 +28,9 @@
       </div>
     </div>
   </div>
+
 </mat-card>
 
-<ng-template #loader>
-  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+<ng-template #noChat>
+    <p>You haven't got any chat yet😢</p>
 </ng-template>
