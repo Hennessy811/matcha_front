@@ -15,4 +15,4 @@ RUN npm install -g @angular/cli@latest
 COPY . /matcha_front
 
 # start app
-CMD ng serve --host 0.0.0.0
+CMD ng serve --prod --host 0.0.0.0
