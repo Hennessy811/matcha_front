@@ -47,6 +47,16 @@ export function reducer(state = initialState, action: UserActions): State {
       };
     }
 
+    case UserActionTypes.SortUsersFrate: {
+      const [...newFeed] = state.filterFeed;
+      newFeed.sort((a: User, b: User) => (b.fame_rating - a.fame_rating));
+      return {
+        ...state,
+        // @ts-ignore
+        filterFeed: newFeed
+      };
+    }
+
     case UserActionTypes.SortUsersAge: {
       const [...newFeed] = state.filterFeed;
       newFeed.sort((a: User, b: User) => {
