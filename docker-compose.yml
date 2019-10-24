@@ -2,9 +2,8 @@ version: "3"
 
 services:
   matcha_front:
+    container_name: matcha_front
     build:
       context: .
-    environment:
-      - NODE_ENV=production
     ports:
       - "4200:4200"

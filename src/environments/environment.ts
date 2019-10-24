@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://94.16.121.185:4000/api/v1/',
-  socketURL: 'ws://94.16.121.185:4000/socket'
+  baseURL: "http://192.168.99.101:4000/api/v1/",
+  socketURL: "ws://192.168.99.101:4000/socket"
 };
 
 /*
@@ -16,4 +16,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
