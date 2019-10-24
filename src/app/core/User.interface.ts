@@ -13,7 +13,6 @@ export interface User {
   biography?: string;
   is_active?: boolean;
   last_seen?: any;
-  // gender?: 'male' | 'female' | 'transgender';
   gender?: 'male' | 'female';
   preferences?: 'female' | 'male' | 'bisexual';
   interests?: string[];

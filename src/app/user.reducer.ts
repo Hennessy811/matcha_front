@@ -83,6 +83,7 @@ export function reducer(state = initialState, action: UserActions): State {
 
         if (
           dist <= action.payload["radius"] &&
+          state.feed[i].interests.indexOf('#' + action.payload["interests"]) !== -1 &&
           state.feed[i].age >= action.payload["ageFrom"] &&
           state.feed[i].fame_rating >= action.payload['frate'] &&
           state.feed[i].age <= action.payload["ageTo"]) {

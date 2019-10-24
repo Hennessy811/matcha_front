@@ -47,6 +47,18 @@
     </mat-form-field>
   </div>
 
+  <div class="row">
+      <div>Interests: </div>
+      <div class="chips">
+        <mat-chip-list *ngIf="tags">
+          <mat-chip *ngFor="let item of tags" (click)="filter(item)"
+          >
+            {{ item }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+
   <h2>Age gap:</h2>
   <div class="age-gap">
     <span class="label">From: </span>
