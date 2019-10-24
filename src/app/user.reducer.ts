@@ -1,6 +1,6 @@
-import {UserActions, UserActionTypes} from './user.actions';
-import {User} from './core/User.interface';
-import getDistance from 'geolib/es/getDistance';
+import { UserActions, UserActionTypes } from "./user.actions";
+import { User } from "./core/User.interface";
+import getDistance from "geolib/es/getDistance";
 
 export interface UserState {
   user: State;
@@ -20,24 +20,27 @@ export interface State {
 export const initialState: State = {
   isError: false,
   isLoading: false,
-  isLoggedIn: !!localStorage.getItem('token'),
+  isLoggedIn: !!localStorage.getItem("token"),
   profile: null,
   feed: null,
   filterFeed: null,
   viewProfile: null,
-  popularTags: [],
+  popularTags: []
 };
 
 export function reducer(state = initialState, action: UserActions): State {
   switch (action.type) {
-
     case UserActionTypes.SortUsersDistance: {
       const [...newFeed] = state.filterFeed;
       newFeed.sort((a: User, b: User) => {
         const coordsA = a.location.coordinates;
         const coordsB = b.location.coordinates;
-        const distA = Math.sqrt(coordsA[0] * coordsA[0] + coordsA[1] * coordsA[1]);
-        const distB = Math.sqrt(coordsB[0] * coordsB[0] + coordsB[1] * coordsB[1]);
+        const distA = Math.sqrt(
+          coordsA[0] * coordsA[0] + coordsA[1] * coordsA[1]
+        );
+        const distB = Math.sqrt(
+          coordsB[0] * coordsB[0] + coordsB[1] * coordsB[1]
+        );
         return distB - distA;
       });
       return {
@@ -49,7 +52,7 @@ export function reducer(state = initialState, action: UserActions): State {
 
     case UserActionTypes.SortUsersFrate: {
       const [...newFeed] = state.filterFeed;
-      newFeed.sort((a: User, b: User) => (b.fame_rating - a.fame_rating));
+      newFeed.sort((a: User, b: User) => b.fame_rating - a.fame_rating);
       return {
         ...state,
         // @ts-ignore
@@ -60,42 +63,58 @@ export function reducer(state = initialState, action: UserActions): State {
     case UserActionTypes.SortUsersAge: {
       const [...newFeed] = state.filterFeed;
       newFeed.sort((a: User, b: User) => {
-        return a.age - b.age
+        return a.age - b.age;
       });
       return {
         ...state,
         // @ts-ignore
         filterFeed: newFeed
       };
-      }
+    }
 
     case UserActionTypes.FilterUsers: {
       let newFeed = [];
       for (let i = 0; i < state.feed.length; i++) {
         const coords = state.profile.location.coordinates;
-        const dist = getDistance({
-          lat: coords[1],
-          lon: coords[0]
-        }, {
-          lat: state.feed[i].location.coordinates[1],
-          lon: state.feed[i].location.coordinates[0]
-        });
-
-        if (
-          dist <= action.payload["radius"] &&
-          state.feed[i].interests.indexOf('#' + action.payload["interests"]) !== -1 &&
-          state.feed[i].age >= action.payload["ageFrom"] &&
-          state.feed[i].fame_rating >= action.payload['frate'] &&
-          state.feed[i].age <= action.payload["ageTo"]) {
+        const dist = getDistance(
+          {
+            lat: coords[1],
+            lon: coords[0]
+          },
+          {
+            lat: state.feed[i].location.coordinates[1],
+            lon: state.feed[i].location.coordinates[0]
+          }
+        );
+        if (action.payload["interests"]) {
+          if (
+            dist <= action.payload["radius"] &&
+            state.feed[i].interests.indexOf(
+              "#" + action.payload["interests"]
+            ) !== -1 &&
+            state.feed[i].age >= action.payload["ageFrom"] &&
+            state.feed[i].fame_rating >= action.payload["frate"] &&
+            state.feed[i].age <= action.payload["ageTo"]
+          ) {
+            newFeed.push(state.feed[i]);
+          }
+        } else {
+          if (
+            dist <= action.payload["radius"] &&
+            state.feed[i].age >= action.payload["ageFrom"] &&
+            state.feed[i].fame_rating >= action.payload["frate"] &&
+            state.feed[i].age <= action.payload["ageTo"]
+          ) {
             newFeed.push(state.feed[i]);
           }
         }
+      }
       return {
         ...state,
         // @ts-ignore
         filterFeed: newFeed
       };
-      }
+    }
 
     case UserActionTypes.LoadUsersSuccess:
       return {
@@ -110,21 +129,21 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.LoadChats:
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.LoadChatsSuccess:
       return {
         ...state,
         isLoading: false,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.LoginSuccess:
@@ -147,7 +166,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.LoadMeSuccess:
@@ -162,7 +181,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.UpdateMeSuccess:
@@ -177,7 +196,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: false,
-        isError: true,
+        isError: true
       };
 
     case UserActionTypes.LoadUserSuccess:
@@ -192,14 +211,14 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.UploadPhoto:
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.UploadPhotoSuccess:
@@ -209,7 +228,10 @@ export function reducer(state = initialState, action: UserActions): State {
         isError: false,
         profile: {
           ...state.profile,
-          photos: [...state.profile.photos.map(item => ({ ...item, is_main: false, })), ...action.payload]
+          photos: [
+            ...state.profile.photos.map(item => ({ ...item, is_main: false })),
+            ...action.payload
+          ]
         }
       };
 
@@ -217,7 +239,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.SetMainSuccess:
@@ -227,10 +249,15 @@ export function reducer(state = initialState, action: UserActions): State {
         isError: false,
         profile: {
           ...state.profile,
-          photos: [...state.profile.photos.filter(item => item.id !== action.payload.id).map(item => ({
-            ...item,
-            is_main: false,
-          })), action.payload]
+          photos: [
+            ...state.profile.photos
+              .filter(item => item.id !== action.payload.id)
+              .map(item => ({
+                ...item,
+                is_main: false
+              })),
+            action.payload
+          ]
         }
       };
 
@@ -238,7 +265,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.ConnectWithUserSuccess:
@@ -248,7 +275,7 @@ export function reducer(state = initialState, action: UserActions): State {
         isError: false,
         viewProfile: {
           ...state.viewProfile,
-          subscribers: [...state.viewProfile.subscribers, state.profile],
+          subscribers: [...state.viewProfile.subscribers, state.profile]
         }
       };
 
@@ -259,7 +286,7 @@ export function reducer(state = initialState, action: UserActions): State {
         isError: false,
         viewProfile: {
           ...state.viewProfile,
-          subscriptions: [...state.viewProfile.subscriptions, state.profile],
+          subscriptions: [...state.viewProfile.subscriptions, state.profile]
         }
       };
 
@@ -267,7 +294,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.DisconnectWithUserSuccess:
@@ -277,7 +304,9 @@ export function reducer(state = initialState, action: UserActions): State {
         isError: false,
         viewProfile: {
           ...state.viewProfile,
-          subscribers: state.viewProfile.subscribers.filter(item => item.id !== state.profile.id),
+          subscribers: state.viewProfile.subscribers.filter(
+            item => item.id !== state.profile.id
+          )
         }
       };
 
@@ -287,7 +316,9 @@ export function reducer(state = initialState, action: UserActions): State {
         viewProfile: {
           ...state.viewProfile,
           connected: false,
-          subscriptions: state.viewProfile.subscriptions.filter(item => item.id !== state.profile.id),
+          subscriptions: state.viewProfile.subscriptions.filter(
+            item => item.id !== state.profile.id
+          )
         }
       };
 
@@ -295,7 +326,7 @@ export function reducer(state = initialState, action: UserActions): State {
       return {
         ...state,
         isLoading: true,
-        isError: false,
+        isError: false
       };
 
     case UserActionTypes.GetInterestsSuccess:

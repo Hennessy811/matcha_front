@@ -7,11 +7,11 @@ WORKDIR /matcha_front
 
 COPY package.json /matcha_front/package.json
 RUN npm install
-RUN npm install -g @angular/cli@latest
+RUN npm install -g @angular/cli@7.3.9
 
 COPY . /matcha_front
 
-RUN node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --output-path=dist
+RUN ng build --prod --output-path=dist
 
 
 FROM nginx:1.16.0-alpine
