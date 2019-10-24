@@ -40,7 +40,7 @@ export class AuthService {
 
     headers.append("Content-Type", "application/json");
     headers.append("Accept", "*/*");
-    headers.append("Host", "192.168.99.102:4000");
+    headers.append("Host", "192.168.99.103:4000");
 
     return this.http.post(
       `${environment.baseURL}sign_up`,
